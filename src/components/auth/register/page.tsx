@@ -35,8 +35,10 @@ export default function RegisterPage(): React.JSX.Element {
       console.log('==============================');
       
       // Store registration response in localStorage for verify page
-      localStorage.setItem('registration_response', JSON.stringify(response));
-      localStorage.setItem('registration_phone', data.phone_number);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('registration_response', JSON.stringify(response));
+        localStorage.setItem('registration_phone', data.phone_number);
+      }
       
       setRegistrationPhone(data.phone_number);
       

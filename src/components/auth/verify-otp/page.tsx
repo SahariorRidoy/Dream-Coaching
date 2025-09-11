@@ -24,14 +24,16 @@ export default function VerifyOtpPage(): React.JSX.Element | null {
 
   // Load registration response from localStorage
   useEffect(() => {
-    const storedResponse = localStorage.getItem('registration_response')
-    if (storedResponse) {
-      try {
-        const response = JSON.parse(storedResponse)
-        setRegistrationResponse(response)
-        console.log('Loaded registration response:', response)
-      } catch (e) {
-        console.error('Failed to parse registration response:', e)
+    if (typeof window !== 'undefined') {
+      const storedResponse = localStorage.getItem('registration_response')
+      if (storedResponse) {
+        try {
+          const response = JSON.parse(storedResponse)
+          setRegistrationResponse(response)
+          console.log('Loaded registration response:', response)
+        } catch (e) {
+          console.error('Failed to parse registration response:', e)
+        }
       }
     }
   }, [])
@@ -84,8 +86,10 @@ export default function VerifyOtpPage(): React.JSX.Element | null {
       console.log('OTP Verification Response:', response)
       
       // Clear registration data from localStorage
-      localStorage.removeItem('registration_response')
-      localStorage.removeItem('registration_phone')
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('registration_response')
+        localStorage.removeItem('registration_phone')
+      }
       
       // Redirect to profile completion
       router.push("/complete-profile")

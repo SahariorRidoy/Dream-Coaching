@@ -79,6 +79,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Check for existing session on mount
   useEffect(() => {
     const checkAuth = async () => {
+      // Ensure we're on the client side
+      if (typeof window === 'undefined') {
+        dispatch({ type: "SET_LOADING", payload: false })
+        return
+      }
+      
       const token = localStorage.getItem("access_token")
       const isDemoAdmin = localStorage.getItem("demo_admin")
       
@@ -168,18 +174,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const accessToken = response.tokens?.access
       const refreshToken = response.tokens?.refresh
       
-      if (accessToken) {
-        localStorage.setItem("access_token", accessToken)
-        console.log('✅ Access token stored:', accessToken.substring(0, 20) + '...');
-      } else {
-        console.error('❌ No access token found in response.tokens');
-      }
-      
-      if (refreshToken) {
-        localStorage.setItem("refresh_token", refreshToken)
-        console.log('✅ Refresh token stored:', refreshToken.substring(0, 20) + '...');
-      } else {
-        console.error('❌ No refresh token found in response.tokens');
+      if (typeof window !== 'undefined') {
+        if (accessToken) {
+          localStorage.setItem("access_token", accessToken)
+          console.log('✅ Access token stored:', accessToken.substring(0, 20) + '...');
+        } else {
+          console.error('❌ No access token found in response.tokens');
+        }
+        
+        if (refreshToken) {
+          localStorage.setItem("refresh_token", refreshToken)
+          console.log('✅ Refresh token stored:', refreshToken.substring(0, 20) + '...');
+        } else {
+          console.error('❌ No refresh token found in response.tokens');
+        }
       }
       
       // Set user as authenticated with basic info
@@ -211,8 +219,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       const response = await authApi.login(phone_number, password)
 
-      localStorage.setItem("access_token", response.access)
-      localStorage.setItem("refresh_token", response.refresh)
+      if (typeof window !== 'undefined') {
+        localStorage.setItem("access_token", response.access)
+        localStorage.setItem("refresh_token", response.refresh)
+      }
 
       // Get user profile
       const profile = await authApi.getProfile()
@@ -227,10 +237,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const logout = () => {
-    localStorage.removeItem("access_token")
-    localStorage.removeItem("refresh_token")
-    localStorage.removeItem("demo_admin")
-    localStorage.removeItem("demo_user")
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem("access_token")
+      localStorage.removeItem("refresh_token")
+      localStorage.removeItem("demo_admin")
+      localStorage.removeItem("demo_user")
+    }
     dispatch({ type: "LOGOUT" })
   }
 

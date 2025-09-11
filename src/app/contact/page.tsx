@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Mail, Phone, MapPin, Send, MessageCircle } from "lucide-react";
 
-const ContactPage = () => {
+const ContactPage: React.FC = () => {
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-primary/5 via-secondary/10 to-accent/10 py-16 px-4 overflow-hidden">
       {/* Decorative Blobs */}

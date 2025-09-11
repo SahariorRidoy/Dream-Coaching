@@ -1,6 +1,18 @@
 import InstructorCard from "@/components/instructor/InstructorCard";
 
-const instructors = [
+interface Instructor {
+  name: string
+  subject: string
+  subjectColor: string
+  subjectIcon: string
+  title: string
+  institution: string
+  image: string
+  youtube: string
+  facebook: string
+}
+
+const instructors: Instructor[] = [
   {
     name: "Ariana Islam",
     subject: "Physics",
@@ -102,7 +114,7 @@ const instructors = [
   },
 ];
 
-export default function InstructorsPage() {
+export default function InstructorsPage(): JSX.Element {
   return (
     <div className="relative min-h-screen pb-16 bg-gradient-to-br from-background via-muted/20 to-background overflow-hidden">
       {/* Decorative Background */}

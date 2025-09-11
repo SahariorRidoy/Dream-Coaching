@@ -3,12 +3,12 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { AuthProvider } from "@/contexts/AuthContext"; // <-- import your AuthProvider
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
-
 
 export const metadata: Metadata = {
   title: "Dream Coaching",
@@ -22,12 +22,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} antialiased`}
-      >
-        <Navbar />
-        {children}
-        <Footer />
+      <body className={`${geistSans.variable} antialiased`} suppressHydrationWarning>
+        <AuthProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

@@ -9,9 +9,17 @@ import {
   Atom,
   Laptop,
   Users,
+  LucideIcon,
 } from "lucide-react";
 
-const learningPaths = [
+interface LearningPath {
+  title: string
+  desc: string
+  lucideIcon: LucideIcon
+  students: string
+}
+
+const learningPaths: LearningPath[] = [
   {
     title: "Academic Courses",
     desc: "Comprehensive academic preparation for all levels",

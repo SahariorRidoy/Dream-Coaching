@@ -13,8 +13,27 @@ import {
   RefreshCw,
   ArrowRight,
   GraduationCap,
-  Award
+  Award,
+  LucideIcon
 } from "lucide-react";
+
+interface SocialMedia {
+  name: string
+  href: string
+  icon: string
+  bgColor: string
+}
+
+interface NavLink {
+  href: string
+  label: string
+}
+
+interface FooterLink {
+  href: string
+  label: string
+  icon: LucideIcon
+}
 
 export default function Footer() {
   return (

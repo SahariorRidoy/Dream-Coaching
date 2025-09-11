@@ -8,7 +8,12 @@ import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 import Image from "next/image";
 
-const slides = [
+interface Slide {
+  title: string
+  image: string
+}
+
+const slides: Slide[] = [
   {
     title: "HSC - 27 ব্যাচ - অদম্য",
     image:

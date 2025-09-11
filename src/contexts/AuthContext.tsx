@@ -1,0 +1,350 @@
+"use client"
+
+import { createContext, useContext, useReducer, useEffect, ReactNode } from "react"
+import { authApi } from "@/lib/api"
+
+interface User {
+  id?: string
+  email?: string
+  first_name?: string
+  last_name?: string
+  full_name?: string
+  phone_number?: string
+  role?: string
+  user_type?: string
+  profile_image?: string
+  gender?: string
+  birth_date?: string
+}
+
+interface AuthState {
+  user: User | null
+  isAuthenticated: boolean
+  loading: boolean
+  error: string | null
+}
+
+interface AuthContextType extends AuthState {
+  register: (phone_number: string, password: string) => Promise<any>
+  verifyOtp: (phone_number: string, otp: string) => Promise<any>
+  login: (phone_number: string, password: string) => Promise<any>
+  logout: () => void
+  changePassword: (oldPassword: string, newPassword: string) => Promise<any>
+  forgetPassword: (phone_number: string) => Promise<any>
+  resetPassword: (phone_number: string, otp: string, newPassword: string) => Promise<any>
+  updateProfile: (profileData: any, profileImage?: File | null) => Promise<any>
+  clearError: () => void
+}
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined)
+
+// Auth reducer for state management
+const authReducer = (state: AuthState, action: any): AuthState => {
+  switch (action.type) {
+    case "SET_LOADING":
+      return { ...state, loading: action.payload }
+    case "SET_USER":
+      return {
+        ...state,
+        user: action.payload,
+        isAuthenticated: !!action.payload,
+        loading: false,
+      }
+    case "SET_ERROR":
+      return { ...state, error: action.payload, loading: false }
+    case "CLEAR_ERROR":
+      return { ...state, error: null }
+    case "LOGOUT":
+      return {
+        user: null,
+        isAuthenticated: false,
+        loading: false,
+        error: null,
+      }
+    default:
+      return state
+  }
+}
+
+const initialState: AuthState = {
+  user: null,
+  isAuthenticated: false,
+  loading: true,
+  error: null,
+}
+
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [state, dispatch] = useReducer(authReducer, initialState)
+
+  // Check for existing session on mount
+  useEffect(() => {
+    const checkAuth = async () => {
+      const token = localStorage.getItem("access_token")
+      const isDemoAdmin = localStorage.getItem("demo_admin")
+      
+      if (isDemoAdmin === "true") {
+        // Handle demo admin mode
+        const demoUser = localStorage.getItem("demo_user")
+        if (demoUser) {
+          dispatch({ type: "SET_USER", payload: JSON.parse(demoUser) })
+        }
+        return
+      }
+      
+      if (token) {
+        try {
+          const profile = await authApi.getProfile()
+          dispatch({ type: "SET_USER", payload: profile })
+        } catch (error) {
+          // Token might be expired, clear it
+          localStorage.removeItem("access_token")
+          localStorage.removeItem("refresh_token")
+          dispatch({ type: "LOGOUT" })
+        }
+      } else {
+        dispatch({ type: "SET_LOADING", payload: false })
+      }
+    }
+
+    checkAuth()
+  }, [])
+
+  // Auth actions
+  const register = async (phone_number: string, password: string) => {
+    try {
+      dispatch({ type: "SET_LOADING", payload: true })
+      dispatch({ type: "CLEAR_ERROR" })
+
+      console.log('=== API REGISTER REQUEST ===');
+      console.log('Phone:', phone_number);
+      console.log('Password:', password);
+      
+      const response = await authApi.register(phone_number, password)
+      
+      console.log('=== API REGISTER RESPONSE ===');
+      console.log('Raw Response:', response);
+      console.log('Response Type:', typeof response);
+      console.log('Is Array:', Array.isArray(response));
+      if (response && typeof response === 'object') {
+        console.log('Response Keys:', Object.keys(response));
+        console.log('OTP Field:', response.otp);
+        console.log('Message Field:', response.message);
+      }
+      console.log('=============================');
+      
+      return response
+    } catch (error) {
+      console.error('=== REGISTER ERROR ===');
+      console.error('Error:', error);
+      console.error('Error Message:', error instanceof Error ? error.message : 'Unknown error');
+      console.error('======================');
+      
+      const errorMessage = error instanceof Error ? error.message : 'An error occurred'
+      dispatch({ type: "SET_ERROR", payload: errorMessage })
+      throw error
+    } finally {
+      dispatch({ type: "SET_LOADING", payload: false })
+    }
+  }
+
+  const verifyOtp = async (phone_number: string, otp: string) => {
+    try {
+      dispatch({ type: "SET_LOADING", payload: true })
+      dispatch({ type: "CLEAR_ERROR" })
+
+      console.log('=== VERIFY OTP REQUEST ===');
+      console.log('Phone:', phone_number);
+      console.log('OTP:', otp);
+      
+      const response = await authApi.verifyOtp(phone_number, otp)
+      
+      console.log('=== VERIFY OTP RESPONSE ===');
+      console.log('Full Response:', response);
+      console.log('Response Keys:', Object.keys(response || {}));
+      console.log('Tokens Object:', response.tokens);
+      console.log('==========================');
+
+      // Extract tokens from nested tokens object
+      const accessToken = response.tokens?.access
+      const refreshToken = response.tokens?.refresh
+      
+      if (accessToken) {
+        localStorage.setItem("access_token", accessToken)
+        console.log('✅ Access token stored:', accessToken.substring(0, 20) + '...');
+      } else {
+        console.error('❌ No access token found in response.tokens');
+      }
+      
+      if (refreshToken) {
+        localStorage.setItem("refresh_token", refreshToken)
+        console.log('✅ Refresh token stored:', refreshToken.substring(0, 20) + '...');
+      } else {
+        console.error('❌ No refresh token found in response.tokens');
+      }
+      
+      // Set user as authenticated with basic info
+      const basicUser = {
+        phone_number: phone_number,
+        is_verified: true
+      }
+      dispatch({ type: "SET_USER", payload: basicUser })
+      console.log('✅ User set as authenticated:', basicUser);
+
+      return response
+    } catch (error) {
+      console.error('=== VERIFY OTP ERROR ===');
+      console.error('Error:', error);
+      console.error('========================');
+      
+      const errorMessage = error instanceof Error ? error.message : 'An error occurred'
+      dispatch({ type: "SET_ERROR", payload: errorMessage })
+      throw error
+    } finally {
+      dispatch({ type: "SET_LOADING", payload: false })
+    }
+  }
+
+  const login = async (phone_number: string, password: string) => {
+    try {
+      dispatch({ type: "SET_LOADING", payload: true })
+      dispatch({ type: "CLEAR_ERROR" })
+
+      const response = await authApi.login(phone_number, password)
+
+      localStorage.setItem("access_token", response.access)
+      localStorage.setItem("refresh_token", response.refresh)
+
+      // Get user profile
+      const profile = await authApi.getProfile()
+      dispatch({ type: "SET_USER", payload: profile })
+
+      return response
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'An error occurred'
+      dispatch({ type: "SET_ERROR", payload: errorMessage })
+      throw error
+    }
+  }
+
+  const logout = () => {
+    localStorage.removeItem("access_token")
+    localStorage.removeItem("refresh_token")
+    localStorage.removeItem("demo_admin")
+    localStorage.removeItem("demo_user")
+    dispatch({ type: "LOGOUT" })
+  }
+
+  const changePassword = async (oldPassword: string, newPassword: string) => {
+    try {
+      dispatch({ type: "SET_LOADING", payload: true })
+      dispatch({ type: "CLEAR_ERROR" })
+
+      const response = await authApi.changePassword(oldPassword, newPassword)
+      return response
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'An error occurred'
+      dispatch({ type: "SET_ERROR", payload: errorMessage })
+      throw error
+    } finally {
+      dispatch({ type: "SET_LOADING", payload: false })
+    }
+  }
+
+  const forgetPassword = async (phone_number: string) => {
+    try {
+      dispatch({ type: "SET_LOADING", payload: true })
+      dispatch({ type: "CLEAR_ERROR" })
+
+      const response = await authApi.forgetPassword(phone_number)
+      return response
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'An error occurred'
+      dispatch({ type: "SET_ERROR", payload: errorMessage })
+      throw error
+    } finally {
+      dispatch({ type: "SET_LOADING", payload: false })
+    }
+  }
+
+  const resetPassword = async (phone_number: string, otp: string, newPassword: string) => {
+    try {
+      dispatch({ type: "SET_LOADING", payload: true })
+      dispatch({ type: "CLEAR_ERROR" })
+
+      const response = await authApi.resetPassword(phone_number, otp, newPassword)
+      return response
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'An error occurred'
+      dispatch({ type: "SET_ERROR", payload: errorMessage })
+      throw error
+    } finally {
+      dispatch({ type: "SET_LOADING", payload: false })
+    }
+  }
+
+  const updateProfile = async (profileData: any, profileImage?: File | null) => {
+    try {
+      dispatch({ type: "SET_LOADING", payload: true })
+      dispatch({ type: "CLEAR_ERROR" })
+
+      console.log('=== UPDATE PROFILE REQUEST ===');
+      console.log('Profile Data:', profileData);
+      console.log('Profile Image:', profileImage);
+      console.log('Current User:', state.user);
+      
+      const response = await authApi.updateProfile(profileData, profileImage)
+      
+      console.log('=== UPDATE PROFILE RESPONSE ===');
+      console.log('Response:', response);
+      console.log('===============================');
+
+      // Update user state with new profile data
+      dispatch({ type: "SET_USER", payload: response })
+
+      return response
+    } catch (error) {
+      console.error('=== UPDATE PROFILE ERROR ===');
+      console.error('Error:', error);
+      console.error('Error Type:', typeof error);
+      console.error('Error Keys:', error && typeof error === 'object' ? Object.keys(error) : 'Not an object');
+      if (error && typeof error === 'object' && 'status' in error) {
+        console.error('Status:', (error as any).status);
+        console.error('Data:', (error as any).data);
+      }
+      console.error('============================');
+      
+      const errorMessage = error instanceof Error ? error.message : 'An error occurred'
+      dispatch({ type: "SET_ERROR", payload: errorMessage })
+      throw error
+    } finally {
+      dispatch({ type: "SET_LOADING", payload: false })
+    }
+  }
+
+  const clearError = () => {
+    dispatch({ type: "CLEAR_ERROR" })
+  }
+
+  const value = {
+    ...state,
+    register,
+    verifyOtp,
+    login,
+    logout,
+    changePassword,
+    forgetPassword,
+    resetPassword,
+    updateProfile,
+    clearError,
+  }
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+}
+
+export function useAuth(): AuthContextType {
+  const context = useContext(AuthContext)
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider")
+  }
+  return context
+}

@@ -11,10 +11,36 @@ import {
   MapPin,
   Mail,
   Phone,
+  LucideIcon,
 } from "lucide-react";
 import Image from "next/image";
 
-const adminTeam = [
+interface AdminMember {
+  name: string
+  role: string
+  image: string
+  experience: string
+  education: string
+  email: string
+  phone: string
+}
+
+interface Teacher {
+  name: string
+  role: string
+  image: string
+  subjects: string[]
+  experience: string
+  education: string
+}
+
+interface Stat {
+  label: string
+  value: string
+  icon: LucideIcon
+}
+
+const adminTeam: AdminMember[] = [
   {
     name: "Dr. Ahmed Rahman",
     role: "Founder & Director",
@@ -37,7 +63,7 @@ const adminTeam = [
   },
 ];
 
-const teachers = [
+const teachers: Teacher[] = [
   {
     name: "Mohammad Ali",
     role: "Mathematics Teacher",
@@ -93,14 +119,14 @@ const teachers = [
   },
 ];
 
-const stats = [
+const stats: Stat[] = [
   { label: "Years of Excellence", value: "15+", icon: Award },
   { label: "Students Taught", value: "18,382", icon: Users },
   { label: "Expert Teachers", value: "25+", icon: GraduationCap },
   { label: "Courses Offered", value: "27", icon: BookOpen },
 ];
 
-const AboutUsPage = () => {
+const AboutUsPage: React.FC = () => {
   return (
     <div className="relative min-h-screen bg-background overflow-hidden">
       {/* Decorative Background */}

@@ -5,8 +5,29 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { GraduationCap, BookOpen, Users, Clock, Star } from "lucide-react";
 
+interface Filter {
+  label: string
+  count: number
+  category: string
+}
+
+interface Course {
+  image: string
+  badge: string
+  title: string
+  price: number
+  oldPrice?: number
+  discount?: string
+  tag: string
+  isStarred: boolean
+  students: number
+  duration: string
+  rating: number
+  isFree?: boolean
+}
+
 // Enhanced filters with proper counts
-const filters = [
+const filters: Filter[] = [
   { label: "All Courses", count: 50, category: "all" },
   { label: "Combos", count: 12, category: "Combos" },
   { label: "HSC", count: 15, category: "HSC" },
@@ -15,7 +36,7 @@ const filters = [
 ];
 
 // Comprehensive demo data for all categories
-const allCourses = [
+const allCourses: Course[] = [
   // SSC Courses (18)
   {
     image: "https://picsum.photos/id/1018/600/400",
@@ -673,7 +694,7 @@ const allCourses = [
   },
 ];
 
-export default function CoursesPage() {
+export default function CoursesPage(): JSX.Element {
   const [selected, setSelected] = useState(0);
   const [visibleCourses, setVisibleCourses] = useState(12);
 

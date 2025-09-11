@@ -3,7 +3,13 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Star, Quote } from "lucide-react";
 
-const reviews = [
+interface Review {
+  name: string
+  text: string
+  rating: number
+}
+
+const reviews: Review[] = [
   {
     name: "Tasnuva Tarin",
     text: "এইখানে পড়াশোনা করে আমার অনেক উপকার হয়েছে। সবাইকে রিকমেন্ড করবো।",
@@ -55,7 +61,7 @@ export default function StudentReviews() {
             Discover the transformative experiences of students who have
             achieved success with{" "}
             <span className="text-primary font-semibold">
-              Redwan&apos;s Method
+              Dream Coaching
             </span>
           </p>
           <div className="mt-6 flex justify-center">

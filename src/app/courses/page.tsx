@@ -722,22 +722,22 @@ export default function CoursesPage(): React.JSX.Element {
   };
 
   return (
-    <div className="bg-gradient-to-br from-background via-muted/20 to-background min-h-screen pb-12">
-      <div className="max-w-7xl mx-auto px-4 py-10">
+    <div className="bg-gradient-to-br from-background via-muted/20 to-background min-h-screen pb-8 sm:pb-12">
+      <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8 lg:py-10">
         {/* Header */}
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-2xl flex items-center justify-center shadow-lg">
-              <GraduationCap className="w-8 h-8 text-primary-foreground" />
+        <div className="text-center mb-8 sm:mb-12">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-4">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-primary to-secondary rounded-2xl flex items-center justify-center shadow-lg">
+              <GraduationCap className="w-6 h-6 sm:w-8 sm:h-8 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-5xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
                 All Courses
               </h1>
-              <p className="text-sm text-muted-foreground mt-1">Excellence in Education</p>
+              <p className="text-xs sm:text-sm text-muted-foreground mt-1">Excellence in Education</p>
             </div>
           </div>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-lg leading-relaxed">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base lg:text-lg leading-relaxed px-4">
             Improve your academic knowledge and prepare effectively for your
             examinations by enrolling in our courses. Learn from expert and
             experienced instructors with our comprehensive learning platform.
@@ -754,37 +754,38 @@ export default function CoursesPage(): React.JSX.Element {
         {/* Courses Section */}
         <div className="space-y-8">
           {/* Section Header */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <BookOpen className="w-6 h-6 text-primary" />
-              <h2 className="text-2xl font-bold text-foreground">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+              <h2 className="text-xl sm:text-2xl font-bold text-foreground">
                 {filters[selected].label}
               </h2>
-              <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
+              <span className="px-2 sm:px-3 py-1 bg-primary/10 text-primary rounded-full text-xs sm:text-sm font-medium">
                 {filteredCourses.length} courses
               </span>
             </div>
             
             {/* Stats */}
-            <div className="hidden md:flex items-center gap-6 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <Users className="w-4 h-4" />
-                <span>{filteredCourses.reduce((sum, course) => sum + (course.students || 0), 0).toLocaleString()}+ students</span>
+            <div className="flex items-center gap-4 sm:gap-6 text-xs sm:text-sm text-muted-foreground">
+              <div className="flex items-center gap-1 sm:gap-2">
+                <Users className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">{filteredCourses.reduce((sum, course) => sum + (course.students || 0), 0).toLocaleString()}+ students</span>
+                <span className="sm:hidden">{Math.round(filteredCourses.reduce((sum, course) => sum + (course.students || 0), 0) / 1000)}k+ students</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Star className="w-4 h-4 text-accent" />
+              <div className="flex items-center gap-1 sm:gap-2">
+                <Star className="w-3 h-3 sm:w-4 sm:h-4 text-accent" />
                 <span>4.7 avg rating</span>
               </div>
             </div>
           </div>
 
           {/* Courses Grid */}
-          <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {displayedCourses.map((course, idx) => (
               <div 
                 key={`${course.tag}-${idx}`}
                 className="animate-fade-in"
-                style={{ animationDelay: `${idx * 100}ms` }}
+                style={{ animationDelay: `${idx * 50}ms` }}
               >
                 <CourseCard {...course} />
               </div>
@@ -793,15 +794,15 @@ export default function CoursesPage(): React.JSX.Element {
 
           {/* See More Button */}
           {hasMoreCourses && (
-            <div className="text-center pt-8">
+            <div className="text-center pt-6 sm:pt-8">
               <Button
                 onClick={loadMoreCourses}
                 size="lg"
-                className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-primary-foreground px-8 py-3 text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-primary-foreground px-6 sm:px-8 py-3 text-base sm:text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 w-full sm:w-auto"
               >
-                <BookOpen className="w-5 h-5 mr-2" />
+                <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                 See More Courses
-                <span className="ml-2 text-sm opacity-80">
+                <span className="ml-2 text-xs sm:text-sm opacity-80">
                   ({filteredCourses.length - visibleCourses} remaining)
                 </span>
               </Button>
@@ -810,12 +811,12 @@ export default function CoursesPage(): React.JSX.Element {
 
           {/* No courses message */}
           {filteredCourses.length === 0 && (
-            <div className="text-center py-16">
-              <div className="w-24 h-24 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
-                <BookOpen className="w-12 h-12 text-muted-foreground" />
+            <div className="text-center py-12 sm:py-16">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+                <BookOpen className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground" />
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">No courses found</h3>
-              <p className="text-muted-foreground">Try selecting a different category or check back later for new courses.</p>
+              <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-2">No courses found</h3>
+              <p className="text-sm sm:text-base text-muted-foreground px-4">Try selecting a different category or check back later for new courses.</p>
             </div>
           )}
         </div>

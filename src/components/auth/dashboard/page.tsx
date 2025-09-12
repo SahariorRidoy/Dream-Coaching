@@ -101,42 +101,43 @@ export default function DashboardPage(): React.JSX.Element {
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
         <Navigation />
 
-        <main className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <main className="max-w-7xl mx-auto py-4 sm:py-6 lg:py-8 px-4 sm:px-6 lg:px-8">
           {/* Welcome Header */}
-          <div className="mb-8">
-            <div className="flex items-center justify-between">
+          <div className="mb-6 sm:mb-8">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
-                <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                   Welcome back, {getDisplayName()}!
                 </h1>
-                <p className="text-lg text-muted-foreground mt-2">
+                <p className="text-base sm:text-lg text-muted-foreground mt-2">
                   {isAdmin ? "Manage your coaching center from your admin dashboard" : "Continue your learning journey"}
                 </p>
               </div>
-              <div className="flex items-center gap-3">
-                <Badge variant={isAdmin ? "default" : "secondary"} className="px-3 py-1">
+              <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
+                <Badge variant={isAdmin ? "default" : "secondary"} className="px-2 sm:px-3 py-1 text-xs sm:text-sm">
                   {isAdmin ? "Administrator" : "Student"}
                 </Badge>
-                <Button variant="outline" size="sm">
-                  <Bell className="h-4 w-4 mr-2" />
-                  Notifications
+                <Button variant="outline" size="sm" className="flex-1 sm:flex-none">
+                  <Bell className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                  <span className="hidden sm:inline">Notifications</span>
+                  <span className="sm:hidden">Alerts</span>
                 </Button>
               </div>
             </div>
           </div>
 
           {/* Stats Overview */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
             {isAdmin ? (
               <>
                 <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white border-0">
-                  <CardContent className="p-6">
+                  <CardContent className="p-4 sm:p-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-blue-100 text-sm font-medium">Total Students</p>
-                        <p className="text-3xl font-bold">{stats.totalStudents}</p>
+                        <p className="text-blue-100 text-xs sm:text-sm font-medium">Total Students</p>
+                        <p className="text-2xl sm:text-3xl font-bold">{stats.totalStudents}</p>
                       </div>
-                      <Users className="h-8 w-8 text-blue-200" />
+                      <Users className="h-6 w-6 sm:h-8 sm:w-8 text-blue-200" />
                     </div>
                   </CardContent>
                 </Card>
@@ -224,7 +225,7 @@ export default function DashboardPage(): React.JSX.Element {
             )}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
             {/* Main Content Area */}
             <div className="lg:col-span-2 space-y-6">
               {/* Quick Actions */}
@@ -239,15 +240,15 @@ export default function DashboardPage(): React.JSX.Element {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     {isAdmin ? (
                       <>
-                        <Button className="h-auto p-4 justify-start bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700" asChild>
-                          <Link href="/admin/students" className="flex items-center gap-3">
-                            <UserCheck className="h-5 w-5" />
+                        <Button className="h-auto p-3 sm:p-4 justify-start bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700" asChild>
+                          <Link href="/admin/students" className="flex items-center gap-2 sm:gap-3">
+                            <UserCheck className="h-4 w-4 sm:h-5 sm:w-5" />
                             <div className="text-left">
-                              <div className="font-medium">Manage Students</div>
-                              <div className="text-xs text-blue-100">View and manage student accounts</div>
+                              <div className="font-medium text-sm sm:text-base">Manage Students</div>
+                              <div className="text-xs text-blue-100 hidden sm:block">View and manage student accounts</div>
                             </div>
                           </Link>
                         </Button>

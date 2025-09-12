@@ -9,7 +9,8 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Progress } from "@/components/ui/progress"
-import { User, Phone, Mail, Calendar, CheckCircle, ArrowRight, ArrowLeft, Upload, Camera } from "lucide-react"
+import { User, Mail, Calendar, CheckCircle, ArrowRight, ArrowLeft, Upload, Camera } from "lucide-react"
+import Image from "next/image"
 
 interface ProfileData {
   full_name: string
@@ -144,7 +145,7 @@ export default function CompleteProfilePage(): React.JSX.Element {
                   <div className="relative">
                     <div className="w-24 h-24 rounded-full border-2 border-dashed border-gray-300 flex items-center justify-center overflow-hidden bg-gray-50">
                       {imagePreview ? (
-                        <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
+                        <Image src={imagePreview} alt="Preview" width={96} height={96} className="w-full h-full object-cover" />
                       ) : (
                         <Camera className="h-8 w-8 text-gray-400" />
                       )}

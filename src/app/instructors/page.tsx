@@ -114,7 +114,7 @@ const instructors: Instructor[] = [
   },
 ];
 
-export default function InstructorsPage(): JSX.Element {
+export default function InstructorsPage(): React.JSX.Element {
   return (
     <div className="relative min-h-screen pb-16 bg-gradient-to-br from-background via-muted/20 to-background overflow-hidden">
       {/* Decorative Background */}

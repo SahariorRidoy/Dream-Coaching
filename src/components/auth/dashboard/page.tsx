@@ -11,8 +11,6 @@ import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { 
   User, 
-  Mail, 
-  Phone, 
   Settings, 
   Edit, 
   BookOpen, 

@@ -7,7 +7,6 @@ import {
   Users,
   Award,
   BookOpen,
-  Star,
   MapPin,
   Mail,
   Phone,
@@ -25,14 +24,14 @@ interface AdminMember {
   phone: string
 }
 
-interface Teacher {
-  name: string
-  role: string
-  image: string
-  subjects: string[]
-  experience: string
-  education: string
-}
+// interface Teacher {
+//   name: string
+//   role: string
+//   image: string
+//   subjects: string[]
+//   experience: string
+//   education: string
+// }
 
 interface Stat {
   label: string
@@ -63,61 +62,56 @@ const adminTeam: AdminMember[] = [
   },
 ];
 
-const teachers: Teacher[] = [
-  {
-    name: "Mohammad Ali",
-    role: "Mathematics Teacher",
-    image: "https://i.pravatar.cc/300?img=6",
-
-    subjects: ["Algebra", "Calculus", "Geometry"],
-    experience: "8 Years",
-    education: "M.Sc in Mathematics",
-  },
-  {
-    name: "Rashida Begum",
-    role: "Physics Teacher",
-    image: "https://i.pravatar.cc/300?img=6",
-
-    subjects: ["Mechanics", "Thermodynamics", "Optics"],
-    experience: "10 Years",
-    education: "M.Sc in Physics",
-  },
-  {
-    name: "Karim Hassan",
-    role: "Chemistry Teacher",
-    image: "https://i.pravatar.cc/300?img=6",
-
-    subjects: ["Organic", "Inorganic", "Physical Chemistry"],
-    experience: "7 Years",
-    education: "M.Sc in Chemistry",
-  },
-  {
-    name: "Nasreen Ahmed",
-    role: "Biology Teacher",
-    image: "https://i.pravatar.cc/300?img=6",
-
-    subjects: ["Botany", "Zoology", "Human Biology"],
-    experience: "9 Years",
-    education: "M.Sc in Biology",
-  },
-  {
-    name: "Rafiq Islam",
-    role: "English Teacher",
-    image: "https://i.pravatar.cc/300?img=6",
-
-    subjects: ["Grammar", "Literature", "Composition"],
-    experience: "11 Years",
-    education: "M.A in English Literature",
-  },
-  {
-    name: "Salma Khatun",
-    role: "Bangla Teacher",
-    image: "https://i.pravatar.cc/300?img=6",
-    subjects: ["Grammar", "Literature", "Composition"],
-    experience: "6 Years",
-    education: "M.A in Bangla Literature",
-  },
-];
+// const teachers: Teacher[] = [
+//   {
+//     name: "Mohammad Ali",
+//     role: "Mathematics Teacher",
+//     image: "https://i.pravatar.cc/300?img=6",
+//     subjects: ["Algebra", "Calculus", "Geometry"],
+//     experience: "8 Years",
+//     education: "M.Sc in Mathematics",
+//   },
+//   {
+//     name: "Rashida Begum",
+//     role: "Physics Teacher",
+//     image: "https://i.pravatar.cc/300?img=6",
+//     subjects: ["Mechanics", "Thermodynamics", "Optics"],
+//     experience: "10 Years",
+//     education: "M.Sc in Physics",
+//   },
+//   {
+//     name: "Karim Hassan",
+//     role: "Chemistry Teacher",
+//     image: "https://i.pravatar.cc/300?img=6",
+//     subjects: ["Organic", "Inorganic", "Physical Chemistry"],
+//     experience: "7 Years",
+//     education: "M.Sc in Chemistry",
+//   },
+//   {
+//     name: "Nasreen Ahmed",
+//     role: "Biology Teacher",
+//     image: "https://i.pravatar.cc/300?img=6",
+//     subjects: ["Botany", "Zoology", "Human Biology"],
+//     experience: "9 Years",
+//     education: "M.Sc in Biology",
+//   },
+//   {
+//     name: "Rafiq Islam",
+//     role: "English Teacher",
+//     image: "https://i.pravatar.cc/300?img=6",
+//     subjects: ["Grammar", "Literature", "Composition"],
+//     experience: "11 Years",
+//     education: "M.A in English Literature",
+//   },
+//   {
+//     name: "Salma Khatun",
+//     role: "Bangla Teacher",
+//     image: "https://i.pravatar.cc/300?img=6",
+//     subjects: ["Grammar", "Literature", "Composition"],
+//     experience: "6 Years",
+//     education: "M.A in Bangla Literature",
+//   },
+// ];
 
 const stats: Stat[] = [
   { label: "Years of Excellence", value: "15+", icon: Award },

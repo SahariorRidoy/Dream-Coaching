@@ -13,27 +13,27 @@ import {
   RefreshCw,
   ArrowRight,
   GraduationCap,
-  Award,
-  LucideIcon
+  // Award,
+  //LucideIcon
 } from "lucide-react";
 
-interface SocialMedia {
-  name: string
-  href: string
-  icon: string
-  bgColor: string
-}
+// interface SocialMedia {
+//   name: string
+//   href: string
+//   icon: string
+//   bgColor: string
+// }
 
-interface NavLink {
-  href: string
-  label: string
-}
+// interface NavLink {
+//   href: string
+//   label: string
+// }
 
-interface FooterLink {
-  href: string
-  label: string
-  icon: LucideIcon
-}
+// interface FooterLink {
+//   href: string
+//   label: string
+//   icon: LucideIcon
+// }
 
 export default function Footer() {
   return (
@@ -116,9 +116,11 @@ export default function Footer() {
                     className={`w-10 h-10 bg-primary-foreground/10 ${social.bgColor} rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110`}
                     aria-label={social.name}
                   >
-                    <img 
+                    <Image 
                       src={social.icon} 
                       alt={social.name}
+                      width={20}
+                      height={20}
                       className="w-5 h-5 object-contain"
                     />
                   </a>
@@ -258,9 +260,11 @@ export default function Footer() {
                   <span>SSL Secured</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <img 
+                  <Image 
                     src="https://sslcommerz.com/wp-content/uploads/2021/11/logo.png"
                     alt="Verified by SSLCommerz"
+                    width={100}
+                    height={32}
                     className="h-8 w-auto object-contain"
                   />
                 </div>

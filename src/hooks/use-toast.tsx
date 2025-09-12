@@ -27,12 +27,12 @@ interface ToastAction {
   toastId?: string
 }
 
-const actionTypes = {
-  ADD_TOAST: "ADD_TOAST" as const,
-  UPDATE_TOAST: "UPDATE_TOAST" as const,
-  DISMISS_TOAST: "DISMISS_TOAST" as const,
-  REMOVE_TOAST: "REMOVE_TOAST" as const,
-}
+// const actionTypes = {
+//   ADD_TOAST: "ADD_TOAST" as const,
+//   UPDATE_TOAST: "UPDATE_TOAST" as const,
+//   DISMISS_TOAST: "DISMISS_TOAST" as const,
+//   REMOVE_TOAST: "REMOVE_TOAST" as const,
+// }
 
 let count = 0
 
@@ -64,13 +64,13 @@ export const reducer = (state: ToastState, action: ToastAction): ToastState => {
     case "ADD_TOAST":
       return {
         ...state,
-        toasts: [action.toast, ...state.toasts].slice(0, TOAST_LIMIT),
+        toasts: [action.toast!, ...state.toasts].slice(0, TOAST_LIMIT),
       }
 
     case "UPDATE_TOAST":
       return {
         ...state,
-        toasts: state.toasts.map((t) => (t.id === action.toast.id ? { ...t, ...action.toast } : t)),
+        toasts: state.toasts.map((t) => (t.id === action.toast!.id ? { ...t, ...action.toast } : t)),
       }
 
     case "DISMISS_TOAST": {

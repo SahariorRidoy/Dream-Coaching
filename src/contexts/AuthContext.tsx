@@ -101,7 +101,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         try {
           const profile = await authApi.getProfile()
           dispatch({ type: "SET_USER", payload: profile })
-        } catch (error) {
+        } catch {
           // Token might be expired, clear it
           localStorage.removeItem("access_token")
           localStorage.removeItem("refresh_token")

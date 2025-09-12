@@ -26,7 +26,7 @@ export default function InstructorCard({
   image,
   youtube,
   facebook,
-  small = true,
+  // small = true,
 }: InstructorCardProps) {
   return (
     <Card className="group bg-instructor-card border-1 cursor-pointer shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 hover:scale-105 animate-fade-in max-w-[280px] w-full h-[340px] flex flex-col">

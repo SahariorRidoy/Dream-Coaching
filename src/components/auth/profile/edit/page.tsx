@@ -50,7 +50,7 @@ export default function EditProfilePage(): React.JSX.Element | null {
         setImagePreview(user.profile_image)
       }
     }
-  }, [user])
+  }, [user, updateField])
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -103,11 +103,11 @@ export default function EditProfilePage(): React.JSX.Element | null {
     })
   }
 
-  const validatePhoneNumber = (phone?: string): boolean => {
-    if (!phone) return true
-    const phoneRegex = /^01[3-9]\d{8}$/
-    return phoneRegex.test(phone)
-  }
+  // const validatePhoneNumber = (phone?: string): boolean => {
+  //   if (!phone) return true
+  //   const phoneRegex = /^01[3-9]\d{8}$/
+  //   return phoneRegex.test(phone)
+  // }
 
   if (success) {
     return (

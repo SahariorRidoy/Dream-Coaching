@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
-import { User, Mail, Phone, Calendar, Edit, Settings, LogOut, MapPin, Heart, Shield, ArrowLeft } from "lucide-react"
+import { User, Mail, Phone, Calendar, Edit, Settings, LogOut, Heart, Shield, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 
 export default function ProfilePage(): React.JSX.Element | null {

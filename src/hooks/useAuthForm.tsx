@@ -4,8 +4,8 @@ import { useState } from "react"
 import { useAuth } from "@/contexts/AuthContext"
 
 export function useAuthForm() {
-  const [formData, setFormData] = useState({})
-  const [errors, setErrors] = useState({})
+  const [formData, setFormData] = useState<Record<string, any>>({})
+  const [errors, setErrors] = useState<Record<string, string | null>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { clearError } = useAuth()
 
@@ -13,7 +13,7 @@ export function useAuthForm() {
     setFormData((prev) => ({ ...prev, [field]: value }))
 
     // Clear field error when user starts typing
-    if (errors[field]) {
+    if ((errors as any)[field]) {
       setErrors((prev) => ({ ...prev, [field]: null }))
     }
 
@@ -27,7 +27,7 @@ export function useAuthForm() {
   }
 
   const validatePassword = (password: string): boolean => {
-    return password && password.length >= 6
+    return Boolean(password && password.length >= 6)
   }
 
   const validatePhoneNumber = (phone?: string): boolean => {
@@ -65,12 +65,12 @@ export function useAuthForm() {
   }
 
   const validateForm = (fields: string[], rules: any = {}): boolean => {
-    const newErrors = {}
+    const newErrors: Record<string, string> = {}
 
     fields.forEach((field) => {
-      const error = validateField(field, formData[field], rules[field])
+      const error = validateField(field, (formData as any)[field], rules[field])
       if (error) {
-        newErrors[field] = error
+        (newErrors as any)[field] = error
       }
     })
 
@@ -88,7 +88,7 @@ export function useAuthForm() {
     try {
       await onSubmit(formData)
       return true
-    } catch (error) {
+    } catch {
       // Error is handled by auth context
       return false
     } finally {

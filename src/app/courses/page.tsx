@@ -3,7 +3,7 @@ import CourseCard from "@/components/courses/CourseCard";
 import CourseFilterBar from "@/components/courses/CourseFilterBar";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { GraduationCap, BookOpen, Users, Clock, Star } from "lucide-react";
+import { GraduationCap, BookOpen, Users, Star } from "lucide-react";
 
 interface Filter {
   label: string
@@ -694,7 +694,7 @@ const allCourses: Course[] = [
   },
 ];
 
-export default function CoursesPage(): JSX.Element {
+export default function CoursesPage(): React.JSX.Element {
   const [selected, setSelected] = useState(0);
   const [visibleCourses, setVisibleCourses] = useState(12);
 

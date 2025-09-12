@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+//import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAuthForm } from '@/hooks/useAuthForm';
 import { Button } from '@/components/ui/button';
@@ -19,8 +19,8 @@ interface RegisterData {
 
 export default function RegisterPage(): React.JSX.Element {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [registrationPhone, setRegistrationPhone] = useState<string>('');
-  const router = useRouter();
+  // const [registrationPhone, setRegistrationPhone] = useState<string>('');
+  // const router = useRouter();
   const { register, error, loading } = useAuth();
   const { formData, errors, isSubmitting, updateField, handleSubmit } = useAuthForm();
 
@@ -40,7 +40,7 @@ export default function RegisterPage(): React.JSX.Element {
         localStorage.setItem('registration_phone', data.phone_number);
       }
       
-      setRegistrationPhone(data.phone_number);
+      // setRegistrationPhone(data.phone_number);
       
       // Force redirect to verify OTP page
       const verifyUrl = `/verify-otp?phone_number=${encodeURIComponent(data.phone_number)}`;

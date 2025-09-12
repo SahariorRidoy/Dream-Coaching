@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
+
 import { Eye, EyeOff, Lock, ArrowLeft, Shield, CheckCircle, AlertTriangle, Info } from "lucide-react"
 import Link from "next/link"
 
@@ -59,7 +59,7 @@ export default function ChangePasswordPage(): React.JSX.Element | null {
   }
 
   // Redirect if not authenticated
-  if (!isAuthenticated) {
+  if (typeof window !== "undefined" && !isAuthenticated) {
     router.push("/login")
     return null
   }
@@ -180,7 +180,7 @@ export default function ChangePasswordPage(): React.JSX.Element | null {
                   id="currentPassword"
                   type={showCurrentPassword ? "text" : "password"}
                   placeholder="Enter your current password"
-                  value={formData.currentPassword || ""}
+                  value={(formData as any).currentPassword || ""}
                   onChange={(e) => updateField("currentPassword", e.target.value)}
                   className="pl-10 pr-12 h-12 border-2 border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm transition-all duration-200"
                   disabled={isSubmitting || loading}
@@ -200,10 +200,10 @@ export default function ChangePasswordPage(): React.JSX.Element | null {
                   )}
                 </Button>
               </div>
-              {errors.currentPassword && (
+              {(errors as any).currentPassword && (
                 <p className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1">
                   <AlertTriangle className="h-3 w-3" />
-                  {errors.currentPassword}
+                  {(errors as any).currentPassword}
                 </p>
               )}
             </div>
@@ -218,7 +218,7 @@ export default function ChangePasswordPage(): React.JSX.Element | null {
                   id="newPassword"
                   type={showNewPassword ? "text" : "password"}
                   placeholder="Create a strong new password"
-                  value={formData.newPassword || ""}
+                  value={(formData as any).newPassword || ""}
                   onChange={(e) => handlePasswordChange(e.target.value)}
                   className="pl-10 pr-12 h-12 border-2 border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm transition-all duration-200"
                   disabled={isSubmitting || loading}
@@ -240,7 +240,7 @@ export default function ChangePasswordPage(): React.JSX.Element | null {
               </div>
               
               {/* Password Strength Indicator */}
-              {formData.newPassword && (
+              {(formData as any).newPassword && (
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-xs text-muted-foreground">Password Strength</span>
@@ -260,10 +260,10 @@ export default function ChangePasswordPage(): React.JSX.Element | null {
                 </div>
               )}
               
-              {errors.newPassword && (
+              {(errors as any).newPassword && (
                 <p className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1">
                   <AlertTriangle className="h-3 w-3" />
-                  {errors.newPassword}
+                  {(errors as any).newPassword}
                 </p>
               )}
             </div>
@@ -278,7 +278,7 @@ export default function ChangePasswordPage(): React.JSX.Element | null {
                   id="confirmPassword"
                   type={showConfirmPassword ? "text" : "password"}
                   placeholder="Confirm your new password"
-                  value={formData.confirmPassword || ""}
+                  value={(formData as any).confirmPassword || ""}
                   onChange={(e) => updateField("confirmPassword", e.target.value)}
                   className="pl-10 pr-12 h-12 border-2 border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm transition-all duration-200"
                   disabled={isSubmitting || loading}
@@ -300,9 +300,9 @@ export default function ChangePasswordPage(): React.JSX.Element | null {
               </div>
               
               {/* Password Match Indicator */}
-              {formData.confirmPassword && formData.newPassword && (
+              {(formData as any).confirmPassword && (formData as any).newPassword && (
                 <div className="flex items-center gap-2">
-                  {formData.newPassword === formData.confirmPassword ? (
+                  {(formData as any).newPassword === (formData as any).confirmPassword ? (
                     <>
                       <CheckCircle className="h-4 w-4 text-green-500" />
                       <span className="text-sm text-green-600 dark:text-green-400">Passwords match</span>
@@ -310,16 +310,16 @@ export default function ChangePasswordPage(): React.JSX.Element | null {
                   ) : (
                     <>
                       <AlertTriangle className="h-4 w-4 text-red-500" />
-                      <span className="text-sm text-red-600 dark:text-red-400">Passwords don't match</span>
+                      <span className="text-sm text-red-600 dark:text-red-400">Passwords don&apos;t match</span>
                     </>
                   )}
                 </div>
               )}
               
-              {errors.confirmPassword && (
+              {(errors as any).confirmPassword && (
                 <p className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1">
                   <AlertTriangle className="h-3 w-3" />
-                  {errors.confirmPassword}
+                  {(errors as any).confirmPassword}
                 </p>
               )}
             </div>

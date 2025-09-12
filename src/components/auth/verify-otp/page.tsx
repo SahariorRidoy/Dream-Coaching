@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState, useEffect, useRef } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
@@ -93,7 +93,7 @@ export default function VerifyOtpPage(): React.JSX.Element | null {
       
       // Redirect to profile completion
       router.push("/complete-profile")
-    } catch (error) {
+    } catch {
       // Error handled by auth context
     } finally {
       setIsSubmitting(false)
@@ -108,7 +108,7 @@ export default function VerifyOtpPage(): React.JSX.Element | null {
       await register(phone_number!, "resend") // This would need to be handled by your API
       setCountdown(60)
       setOtp(["", "", "", "", "", ""])
-    } catch (error) {
+    } catch {
       // Error handled by auth context
     }
   }

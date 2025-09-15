@@ -30,7 +30,7 @@ const ContactPage: React.FC = () => {
       await new Promise(resolve => setTimeout(resolve, 1000));
       alert('Message sent successfully! We\'ll get back to you soon.');
       setFormData({ name: '', email: '', subject: '', message: '' });
-    } catch (error) {
+    } catch {
       alert('Failed to send message. Please try again.');
     } finally {
       setIsSubmitting(false);

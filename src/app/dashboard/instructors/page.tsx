@@ -3,23 +3,17 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+
 import { Label } from "@/components/ui/label"
 import { 
   Plus, 
   Search, 
-  Edit, 
-  Trash2, 
   Users, 
   Star,
-  Mail,
-  Phone,
   BookOpen,
-  X,
   Loader2
 } from "lucide-react"
-import Image from "next/image"
+
 import { instructorApi } from "@/lib/api"
 import { useToast } from "@/hooks/use-toast"
 import { InstructorSkeleton } from "@/components/ui/loading-skeleton"
@@ -61,7 +55,7 @@ export default function InstructorsPage() {
     try {
       const data = await instructorApi.getInstructors()
       setInstructors(data)
-    } catch (error) {
+    } catch {
       setInstructors([]) // Set empty array on error
     } finally {
       setLoading(false)
@@ -112,7 +106,7 @@ export default function InstructorsPage() {
 
       // Validate payload
       const validatedData = instructorSchema.parse(payload)
-      const response = await instructorApi.addInstructor(validatedData)
+      await instructorApi.addInstructor(validatedData)
       
       toast({
         title: "Success!",

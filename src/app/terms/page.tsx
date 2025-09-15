@@ -38,7 +38,7 @@ export default function TermsPage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p>By accessing and using Dream Coaching's services, you accept and agree to be bound by the terms and provision of this agreement.</p>
+              <p>By accessing and using Dream Coaching&apos;s services, you accept and agree to be bound by the terms and provision of this agreement.</p>
               <p>If you do not agree to abide by the above, please do not use this service.</p>
             </CardContent>
           </Card>
@@ -51,7 +51,7 @@ export default function TermsPage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p>Permission is granted to temporarily access the materials on Dream Coaching's website for personal, non-commercial transitory viewing only.</p>
+              <p>Permission is granted to temporarily access the materials on Dream Coaching&apos;s website for personal, non-commercial transitory viewing only.</p>
               <p>This is the grant of a license, not a transfer of title, and under this license you may not:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>modify or copy the materials</li>
@@ -70,7 +70,7 @@ export default function TermsPage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p>The materials on Dream Coaching's website are provided on an 'as is' basis. Dream Coaching makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.</p>
+              <p>The materials on Dream Coaching&apos;s website are provided on an &apos;as is&apos; basis. Dream Coaching makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.</p>
             </CardContent>
           </Card>
 
@@ -79,7 +79,7 @@ export default function TermsPage() {
               <CardTitle>4. Limitations</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p>In no event shall Dream Coaching or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on Dream Coaching's website, even if Dream Coaching or an authorized representative has been notified orally or in writing of the possibility of such damage.</p>
+              <p>In no event shall Dream Coaching or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on Dream Coaching&apos;s website, even if Dream Coaching or an authorized representative has been notified orally or in writing of the possibility of such damage.</p>
             </CardContent>
           </Card>
 
@@ -88,7 +88,7 @@ export default function TermsPage() {
               <CardTitle>5. Accuracy of Materials</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p>The materials appearing on Dream Coaching's website could include technical, typographical, or photographic errors. Dream Coaching does not warrant that any of the materials on its website are accurate, complete, or current.</p>
+              <p>The materials appearing on Dream Coaching&apos;s website could include technical, typographical, or photographic errors. Dream Coaching does not warrant that any of the materials on its website are accurate, complete, or current.</p>
             </CardContent>
           </Card>
 

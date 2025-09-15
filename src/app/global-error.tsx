@@ -40,7 +40,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
               </h1>
               
               <p className="text-xl text-slate-300 max-w-md mx-auto">
-                Dream Coaching encountered a critical error. We're working to fix this issue.
+                Dream Coaching encountered a critical error. We&apos;re working to fix this issue.
               </p>
 
               {/* Action Buttons */}

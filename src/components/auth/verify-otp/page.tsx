@@ -15,7 +15,7 @@ export default function VerifyOtpPage(): React.JSX.Element | null {
   const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""])
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const [countdown, setCountdown] = useState<number>(0)
-  const [registrationResponse, setRegistrationResponse] = useState<any>(null)
+  const [, setRegistrationResponse] = useState<any>(null)
   const inputRefs = useRef<(HTMLInputElement | null)[]>([])
   const router = useRouter()
   const searchParams = useSearchParams()

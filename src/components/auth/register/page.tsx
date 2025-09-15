@@ -34,7 +34,7 @@ export default function RegisterPage(): React.JSX.Element {
         try {
           localStorage.setItem('registration_response', JSON.stringify(response));
           localStorage.setItem('registration_phone', data.phone_number);
-        } catch (error) {
+        } catch {
           // Handle localStorage quota exceeded or unavailable
           console.warn('Failed to store registration data locally');
         }

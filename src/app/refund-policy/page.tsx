@@ -12,7 +12,7 @@ export default function RefundPolicyPage() {
             Refund Policy
           </h1>
           <p className="text-muted-foreground">
-            Dream Coaching - Bangladesh's Premier Online Learning Platform
+            Dream Coaching - Bangladesh&apos;s Premier Online Learning Platform
           </p>
         </div>
 
@@ -157,7 +157,7 @@ export default function RefundPolicyPage() {
             <CardContent className="pt-6">
               <p className="text-sm text-red-800">
                 <strong>⚠️ Important Notice:</strong> By enrolling, students acknowledge they have read and agreed to this strict No-Refund Policy. 
-                Dream Coaching's decision on all financial matters is final and non-negotiable. 
+                Dream Coaching&apos;s decision on all financial matters is final and non-negotiable. 
                 This policy complies with Bangladesh digital service regulations and consumer protection laws.
               </p>
             </CardContent>

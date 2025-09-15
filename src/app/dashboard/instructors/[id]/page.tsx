@@ -18,7 +18,7 @@ import {
   Award,
   Facebook,
   Youtube,
-  X,
+
   Loader2,
   Save,
   BookOpen,
@@ -146,7 +146,7 @@ export default function InstructorDetailsPage() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-foreground mb-2">Instructor Not Found</h2>
-          <p className="text-muted-foreground mb-4">The instructor you're looking for doesn't exist.</p>
+          <p className="text-muted-foreground mb-4">The instructor you&apos;re looking for doesn&apos;t exist.</p>
           <Button onClick={() => router.back()}>
             <ArrowLeft className="w-4 h-4 mr-2" />
             Go Back

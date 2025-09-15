@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Home, Search, BookOpen, ArrowLeft, Compass } from "lucide-react"
+import { Home, BookOpen, Compass } from "lucide-react"
 
 export default function NotFound() {
   return (
@@ -38,8 +38,8 @@ export default function NotFound() {
           </div>
 
           <p className="text-lg text-muted-foreground max-w-md mx-auto leading-relaxed">
-            Oops! The page you're looking for seems to have wandered off. 
-            Let's get you back on track to your learning journey.
+            Oops! The page you&apos;re looking for seems to have wandered off. 
+            Let&apos;s get you back on track to your learning journey.
           </p>
 
           {/* Action Buttons */}

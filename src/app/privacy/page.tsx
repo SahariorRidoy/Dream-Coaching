@@ -173,7 +173,7 @@ export default function PrivacyPage() {
               <CardTitle>8. Changes to This Policy</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p>We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the "Last updated" date.</p>
+              <p>We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the &quot;Last updated&quot; date.</p>
             </CardContent>
           </Card>
 

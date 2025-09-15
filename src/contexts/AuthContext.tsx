@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useReducer, useEffect, ReactNode } from "react"
+import { createContext, useContext, useReducer, useEffect, useCallback, ReactNode } from "react"
 import { authApi } from "@/lib/api"
 
 interface User {
@@ -77,7 +77,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(authReducer, initialState)
   
   // Token refresh timer
-  const startTokenRefreshTimer = () => {
+  const startTokenRefreshTimer = useCallback(() => {
     // Refresh token every 5.5 hours (30 minutes before expiration)
     const refreshInterval = setInterval(async () => {
       const refreshToken = localStorage.getItem("refresh_token")
@@ -91,7 +91,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }, 5.5 * 60 * 60 * 1000) // 5.5 hours in milliseconds
     
     return refreshInterval
-  }
+  }, [state.isAuthenticated])
 
   // Check for existing session on mount
   useEffect(() => {
@@ -137,7 +137,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     checkAuth()
-  }, [])
+  }, [startTokenRefreshTimer])
 
   // Auth actions
   const register = async (phone_number: string, password: string) => {

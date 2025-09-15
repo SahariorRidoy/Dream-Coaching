@@ -14,7 +14,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
-import { User, LogOut, BookOpen, Menu, X } from "lucide-react";
+import { User, LogOut, BookOpen, Menu } from "lucide-react";
 import { useState } from "react";
 
 interface NavLink {

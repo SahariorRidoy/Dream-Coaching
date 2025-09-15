@@ -12,6 +12,7 @@ interface Filter {
 }
 
 interface Course {
+  id: string
   image: string
   badge: string
   title: string
@@ -39,6 +40,7 @@ const filters: Filter[] = [
 const allCourses: Course[] = [
   // SSC Courses (18)
   {
+    id: "ssc-ict-basic-pro",
     image: "https://picsum.photos/id/1018/600/400",
     badge: "SSC 26-27",
     title: "SSC ICT Basic to Pro 2.0",
@@ -52,6 +54,7 @@ const allCourses: Course[] = [
     rating: 4.8,
   },
   {
+    id: "ssc-math-complete",
     image: "https://picsum.photos/id/1020/600/400",
     badge: "2026 & 2027",
     title: "SSC Mathematics Complete Course",
@@ -64,6 +67,7 @@ const allCourses: Course[] = [
     rating: 4.9,
   },
   {
+    id: "ssc-physics-mastery",
     image: "https://picsum.photos/id/1015/600/400",
     badge: "SSC",
     title: "SSC Physics Mastery Program",
@@ -77,6 +81,7 @@ const allCourses: Course[] = [
     rating: 4.7,
   },
   {
+    id: "ssc-chemistry-guide",
     image: "https://picsum.photos/id/1012/600/400",
     badge: "SSC",
     title: "SSC Chemistry Complete Guide",
@@ -90,6 +95,7 @@ const allCourses: Course[] = [
     rating: 4.6,
   },
   {
+    id: "ssc-biology-comprehensive",
     image: "https://picsum.photos/id/1010/600/400",
     badge: "SSC",
     title: "SSC Biology Comprehensive Course",
@@ -103,6 +109,7 @@ const allCourses: Course[] = [
     rating: 4.5,
   },
   {
+    id: "ssc-english-mastery",
     image: "https://picsum.photos/id/1008/600/400",
     badge: "SSC",
     title: "SSC English Language Mastery",
@@ -116,6 +123,7 @@ const allCourses: Course[] = [
     rating: 4.8,
   },
   {
+    id: "ssc-bangla-literature",
     image: "https://picsum.photos/id/1006/600/400",
     badge: "SSC",
     title: "SSC Bangla Literature Course",
@@ -129,6 +137,7 @@ const allCourses: Course[] = [
     rating: 4.4,
   },
   {
+    id: "ssc-social-science",
     image: "https://picsum.photos/id/1004/600/400",
     badge: "SSC",
     title: "SSC Social Science Complete",
@@ -142,6 +151,7 @@ const allCourses: Course[] = [
     rating: 4.6,
   },
   {
+    id: "ssc-higher-math",
     image: "https://picsum.photos/id/1002/600/400",
     badge: "SSC",
     title: "SSC Higher Mathematics",
@@ -155,6 +165,7 @@ const allCourses: Course[] = [
     rating: 4.7,
   },
   {
+    id: "ssc-general-science",
     image: "https://picsum.photos/id/1000/600/400",
     badge: "SSC",
     title: "SSC General Science",
@@ -168,6 +179,7 @@ const allCourses: Course[] = [
     rating: 4.5,
   },
   {
+    id: "ssc-geography",
     image: "https://picsum.photos/id/999/600/400",
     badge: "SSC",
     title: "SSC Geography & Environment",
@@ -181,6 +193,7 @@ const allCourses: Course[] = [
     rating: 4.3,
   },
   {
+    id: "ssc-history",
     image: "https://picsum.photos/id/998/600/400",
     badge: "SSC",
     title: "SSC History & Civilization",
@@ -194,6 +207,7 @@ const allCourses: Course[] = [
     rating: 4.4,
   },
   {
+    id: "ssc-economics",
     image: "https://picsum.photos/id/997/600/400",
     badge: "SSC",
     title: "SSC Economics Complete",
@@ -207,6 +221,7 @@ const allCourses: Course[] = [
     rating: 4.6,
   },
   {
+    id: "ssc-accounting",
     image: "https://picsum.photos/id/996/600/400",
     badge: "SSC",
     title: "SSC Accounting Principles",
@@ -220,6 +235,7 @@ const allCourses: Course[] = [
     rating: 4.5,
   },
   {
+    id: "ssc-business-studies",
     image: "https://picsum.photos/id/995/600/400",
     badge: "SSC",
     title: "SSC Business Studies",
@@ -233,6 +249,7 @@ const allCourses: Course[] = [
     rating: 4.4,
   },
   {
+    id: "ssc-agriculture",
     image: "https://picsum.photos/id/994/600/400",
     badge: "SSC",
     title: "SSC Agriculture Science",
@@ -246,6 +263,7 @@ const allCourses: Course[] = [
     rating: 4.2,
   },
   {
+    id: "ssc-home-economics",
     image: "https://picsum.photos/id/993/600/400",
     badge: "SSC",
     title: "SSC Home Economics",
@@ -259,6 +277,7 @@ const allCourses: Course[] = [
     rating: 4.3,
   },
   {
+    id: "ssc-religious-studies",
     image: "https://picsum.photos/id/992/600/400",
     badge: "SSC",
     title: "SSC Religious Studies",
@@ -274,6 +293,7 @@ const allCourses: Course[] = [
 
   // HSC Courses (15)
   {
+    id: "hsc-chemistry-mastery",
     image: "https://picsum.photos/id/1005/600/400",
     badge: "HSC",
     title: "HSC Chemistry Mastery Series",
@@ -287,6 +307,7 @@ const allCourses: Course[] = [
     rating: 4.8,
   },
   {
+    id: "hsc-physics-advanced",
     image: "https://picsum.photos/id/1003/600/400",
     badge: "HSC",
     title: "HSC Physics Advanced Course",
@@ -300,6 +321,7 @@ const allCourses: Course[] = [
     rating: 4.7,
   },
   {
+    id: "hsc-mathematics",
     image: "https://picsum.photos/id/1001/600/400",
     badge: "HSC",
     title: "HSC Mathematics Complete",
@@ -313,6 +335,7 @@ const allCourses: Course[] = [
     rating: 4.9,
   },
   {
+    id: "hsc-biology",
     image: "https://picsum.photos/id/999/600/400",
     badge: "HSC",
     title: "HSC Biology Comprehensive",
@@ -326,6 +349,7 @@ const allCourses: Course[] = [
     rating: 4.6,
   },
   {
+    id: "hsc-english-literature",
     image: "https://picsum.photos/id/997/600/400",
     badge: "HSC",
     title: "HSC English Literature",
@@ -339,6 +363,7 @@ const allCourses: Course[] = [
     rating: 4.5,
   },
   {
+    id: "hsc-bangla-literature",
     image: "https://picsum.photos/id/995/600/400",
     badge: "HSC",
     title: "HSC Bangla Literature",
@@ -352,6 +377,7 @@ const allCourses: Course[] = [
     rating: 4.4,
   },
   {
+    id: "hsc-economics",
     image: "https://picsum.photos/id/993/600/400",
     badge: "HSC",
     title: "HSC Economics Advanced",
@@ -365,6 +391,7 @@ const allCourses: Course[] = [
     rating: 4.7,
   },
   {
+    id: "hsc-accounting",
     image: "https://picsum.photos/id/991/600/400",
     badge: "HSC",
     title: "HSC Accounting & Finance",
@@ -378,6 +405,7 @@ const allCourses: Course[] = [
     rating: 4.6,
   },
   {
+    id: "hsc-business-studies",
     image: "https://picsum.photos/id/989/600/400",
     badge: "HSC",
     title: "HSC Business Studies",
@@ -391,6 +419,7 @@ const allCourses: Course[] = [
     rating: 4.5,
   },
   {
+    id: "hsc-geography",
     image: "https://picsum.photos/id/987/600/400",
     badge: "HSC",
     title: "HSC Geography & Environment",
@@ -404,6 +433,7 @@ const allCourses: Course[] = [
     rating: 4.3,
   },
   {
+    id: "hsc-history",
     image: "https://picsum.photos/id/985/600/400",
     badge: "HSC",
     title: "HSC History & Civilization",
@@ -417,6 +447,7 @@ const allCourses: Course[] = [
     rating: 4.4,
   },
   {
+    id: "hsc-psychology",
     image: "https://picsum.photos/id/983/600/400",
     badge: "HSC",
     title: "HSC Psychology & Philosophy",
@@ -430,6 +461,7 @@ const allCourses: Course[] = [
     rating: 4.2,
   },
   {
+    id: "hsc-sociology",
     image: "https://picsum.photos/id/981/600/400",
     badge: "HSC",
     title: "HSC Sociology Complete",
@@ -443,6 +475,7 @@ const allCourses: Course[] = [
     rating: 4.1,
   },
   {
+    id: "hsc-political-science",
     image: "https://picsum.photos/id/979/600/400",
     badge: "HSC",
     title: "HSC Political Science",
@@ -456,6 +489,7 @@ const allCourses: Course[] = [
     rating: 4.0,
   },
   {
+    id: "hsc-statistics",
     image: "https://picsum.photos/id/977/600/400",
     badge: "HSC",
     title: "HSC Statistics & Data Analysis",
@@ -471,6 +505,7 @@ const allCourses: Course[] = [
 
   // Combos Courses (12)
   {
+    id: "math-physics-combo",
     image: "https://picsum.photos/id/1003/600/400",
     badge: "Combos",
     title: "Math + Physics Combo Pack",
@@ -484,6 +519,7 @@ const allCourses: Course[] = [
     rating: 4.8,
   },
   {
+    id: "chemistry-biology-combo",
     image: "https://picsum.photos/id/1001/600/400",
     badge: "Combos",
     title: "Chemistry + Biology Master Pack",
@@ -497,6 +533,7 @@ const allCourses: Course[] = [
     rating: 4.7,
   },
   {
+    id: "ssc-science-bundle",
     image: "https://picsum.photos/id/999/600/400",
     badge: "Combos",
     title: "SSC Complete Science Bundle",
@@ -510,6 +547,7 @@ const allCourses: Course[] = [
     rating: 4.9,
   },
   {
+    id: "hsc-science-complete",
     image: "https://picsum.photos/id/997/600/400",
     badge: "Combos",
     title: "HSC Science Stream Complete",
@@ -523,6 +561,7 @@ const allCourses: Course[] = [
     rating: 4.8,
   },
   {
+    id: "math-ict-combo",
     image: "https://picsum.photos/id/995/600/400",
     badge: "Combos",
     title: "Math + ICT Combo Course",
@@ -536,6 +575,7 @@ const allCourses: Course[] = [
     rating: 4.6,
   },
   {
+    id: "english-bangla-combo",
     image: "https://picsum.photos/id/993/600/400",
     badge: "Combos",
     title: "English + Bangla Literature",
@@ -549,6 +589,7 @@ const allCourses: Course[] = [
     rating: 4.5,
   },
   {
+    id: "social-science-bundle",
     image: "https://picsum.photos/id/991/600/400",
     badge: "Combos",
     title: "Social Science Complete Bundle",
@@ -562,6 +603,7 @@ const allCourses: Course[] = [
     rating: 4.7,
   },
   {
+    id: "business-economics-combo",
     image: "https://picsum.photos/id/989/600/400",
     badge: "Combos",
     title: "Business Studies + Economics",
@@ -575,6 +617,7 @@ const allCourses: Course[] = [
     rating: 4.4,
   },
   {
+    id: "mega-bundle",
     image: "https://picsum.photos/id/987/600/400",
     badge: "Combos",
     title: "All Subjects Mega Bundle",
@@ -588,6 +631,7 @@ const allCourses: Course[] = [
     rating: 4.9,
   },
   {
+    id: "physics-chemistry-combo",
     image: "https://picsum.photos/id/985/600/400",
     badge: "Combos",
     title: "Physics + Chemistry Advanced",
@@ -601,6 +645,7 @@ const allCourses: Course[] = [
     rating: 4.8,
   },
   {
+    id: "math-statistics-combo",
     image: "https://picsum.photos/id/983/600/400",
     badge: "Combos",
     title: "Math + Statistics Combo",
@@ -614,6 +659,7 @@ const allCourses: Course[] = [
     rating: 4.6,
   },
   {
+    id: "language-arts-combo",
     image: "https://picsum.photos/id/981/600/400",
     badge: "Combos",
     title: "Language Arts Complete",
@@ -629,6 +675,7 @@ const allCourses: Course[] = [
 
   // Class 6-8 Courses (5)
   {
+    id: "class-8-exam-prep",
     image: "https://picsum.photos/id/1025/600/400",
     badge: "Class-8",
     title: "Class-8 II Exam Preparation Free Crash Course",
@@ -641,6 +688,7 @@ const allCourses: Course[] = [
     rating: 4.8,
   },
   {
+    id: "class-7-math-foundation",
     image: "https://picsum.photos/id/1023/600/400",
     badge: "Class-7",
     title: "Class-7 Mathematics Foundation",
@@ -654,6 +702,7 @@ const allCourses: Course[] = [
     rating: 4.6,
   },
   {
+    id: "class-6-science-basics",
     image: "https://picsum.photos/id/1021/600/400",
     badge: "Class-6",
     title: "Class-6 Science Basics",
@@ -667,6 +716,7 @@ const allCourses: Course[] = [
     rating: 4.7,
   },
   {
+    id: "class-8-english-grammar",
     image: "https://picsum.photos/id/1019/600/400",
     badge: "Class-8",
     title: "Class-8 English Grammar Mastery",
@@ -680,6 +730,7 @@ const allCourses: Course[] = [
     rating: 4.4,
   },
   {
+    id: "class-7-social-studies",
     image: "https://picsum.photos/id/1017/600/400",
     badge: "Class-7",
     title: "Class-7 Social Studies Complete",
@@ -696,7 +747,7 @@ const allCourses: Course[] = [
 
 export default function CoursesPage(): React.JSX.Element {
   const [selected, setSelected] = useState(0);
-  const [visibleCourses, setVisibleCourses] = useState(12);
+  const [visibleCourses, setVisibleCourses] = useState(8);
 
   // Filter courses based on selected category
   const filteredCourses = selected === 0 
@@ -708,11 +759,11 @@ export default function CoursesPage(): React.JSX.Element {
   const hasMoreCourses = filteredCourses.length > visibleCourses;
 
   const loadMoreCourses = () => {
-    setVisibleCourses(prev => prev + 12);
+    setVisibleCourses(prev => prev + 16);
   };
 
   const resetPagination = () => {
-    setVisibleCourses(12);
+    setVisibleCourses(8);
   };
 
   // Reset pagination when filter changes

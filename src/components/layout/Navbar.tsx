@@ -53,7 +53,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 sticky top-0 z-50 shadow-lg backdrop-blur-sm">
+    <header className="w-full bg-gradient-to-r from-primary via-primary/95 to-secondary sticky top-0 z-50 shadow-lg backdrop-blur-sm">
       <div className="container mx-auto flex items-center justify-between py-3 px-4">
         <div className="flex items-center gap-2">
           <span className="font-bold text-lg sm:text-xl text-white drop-shadow-sm">
@@ -191,7 +191,7 @@ export default function Navbar() {
                       src={user.profile_image || ""} 
                       alt={user.full_name || "User"} 
                     />
-                    <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold">
+                    <AvatarFallback className="bg-gradient-to-br from-primary to-secondary text-primary-foreground font-semibold">
                       {user.full_name?.charAt(0).toUpperCase() || "U"}
                     </AvatarFallback>
                   </Avatar>
@@ -206,18 +206,18 @@ export default function Navbar() {
                   <p className="text-xs text-gray-500 truncate">{user.phone_number}</p>
                 </div>
                 <DropdownMenuItem 
-                  className="cursor-pointer hover:bg-blue-50 transition-colors duration-200 rounded-lg mx-1 my-1"
+                  className="cursor-pointer hover:bg-primary/10 transition-colors duration-200 rounded-lg mx-1 my-1"
                   onClick={() => router.push("/dashboard")}
                 >
-                  <User className="mr-2 h-4 w-4 text-blue-600" />
+                  <User className="mr-2 h-4 w-4 text-primary" />
                   <span className="text-gray-700">Dashboard</span>
                 </DropdownMenuItem>
                 {user.role !== 'admin' && user.user_type !== 'admin' && (
                   <DropdownMenuItem 
-                    className="cursor-pointer hover:bg-green-50 transition-colors duration-200 rounded-lg mx-1 my-1"
+                    className="cursor-pointer hover:bg-secondary/10 transition-colors duration-200 rounded-lg mx-1 my-1"
                     onClick={() => router.push("/my-learning")}
                   >
-                    <BookOpen className="mr-2 h-4 w-4 text-green-600" />
+                    <BookOpen className="mr-2 h-4 w-4 text-secondary" />
                     <span className="text-gray-700">My Learning</span>
                   </DropdownMenuItem>
                 )}
@@ -234,7 +234,7 @@ export default function Navbar() {
           ) : (
             <Button
               variant="outline"
-              className="cursor-pointer border-2 border-white/30 rounded-full px-4 xl:px-6 bg-white/10 text-white hover:bg-white hover:text-blue-600 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg backdrop-blur-sm font-medium text-sm xl:text-base"
+              className="cursor-pointer border-2 border-white/30 rounded-full px-4 xl:px-6 bg-white/10 text-white hover:bg-white hover:text-primary transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg backdrop-blur-sm font-medium text-sm xl:text-base"
               asChild
             >
               <Link href="/login">Login</Link>

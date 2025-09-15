@@ -1,6 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 type CourseCardProps = {
+  id: string;
   image: string;
   badge: string;
   title: string;
@@ -14,6 +17,7 @@ type CourseCardProps = {
 };
 
 export default function CourseCard({
+  id,
   image,
   badge,
   title,
@@ -27,7 +31,17 @@ export default function CourseCard({
   return (
     <div className="bg-card rounded-xl sm:rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] overflow-hidden flex flex-col h-full">
       <div className="relative aspect-[16/9]">
-        <Image src={image} alt={title} fill className="object-cover" priority />
+        <Image 
+          src={image} 
+          alt={title} 
+          fill 
+          className="object-cover" 
+          priority 
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = '/images/course-placeholder.jpg';
+          }}
+        />
         {isStarred && (
           <span className="absolute top-2 right-2 bg-white rounded-full p-1 shadow-sm">
             <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20" className="text-accent sm:w-5 sm:h-5">
@@ -81,6 +95,29 @@ export default function CourseCard({
             <span className="sm:hidden">{students > 1000 ? `${Math.round(students/1000)}k` : students} students</span>
           </div>
         )}
+        
+        <div className="mt-3 flex gap-2">
+          <Link href={`/courses/${id}`} className="flex-1">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="w-full text-xs sm:text-sm hover:bg-primary hover:text-primary-foreground transition-all duration-200"
+            >
+              View Details
+            </Button>
+          </Link>
+          <Button 
+            size="sm" 
+            className="px-4 sm:px-6 text-xs sm:text-sm bg-gradient-to-r from-secondary to-primary hover:from-secondary/90 hover:to-primary/90 shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105"
+            onClick={(e) => {
+              e.stopPropagation();
+              // Handle enroll logic here
+              // Course enrollment functionality
+            }}
+          >
+            Enroll
+          </Button>
+        </div>
       </div>
     </div>
   );

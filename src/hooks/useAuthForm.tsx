@@ -49,6 +49,13 @@ export function useAuthForm() {
       return "Password must be at least 6 characters long"
     }
 
+    if (field === "confirmPassword" && rules.match) {
+      const matchField = formData[rules.match]
+      if (value !== matchField) {
+        return "Passwords do not match"
+      }
+    }
+
     if (field === "phone_number" && value && !validatePhoneNumber(value)) {
       return "Please enter a valid Bangladeshi phone number"
     }

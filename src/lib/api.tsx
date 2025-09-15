@@ -38,40 +38,65 @@ async function apiRequest(endpoint: string, options: RequestOptions = {}): Promi
     config.headers.Authorization = `Bearer ${token}`
   }
 
-  console.log('=== API REQUEST ===');
-  console.log('URL:', url);
-  console.log('Method:', options.method || 'GET');
-  console.log('Headers:', config.headers);
-  console.log('Body:', options.body);
-  console.log('Token:', token ? 'Present' : 'Missing');
-  console.log('==================');
-
   try {
     const response = await fetch(url, config)
-    
-    console.log('=== API RESPONSE ===');
-    console.log('Status:', response.status);
-    console.log('Status Text:', response.statusText);
-    console.log('Headers:', Object.fromEntries(response.headers.entries()));
-    
     const data = await response.json()
-    console.log('Response Data:', data);
-    console.log('===================');
 
     if (!response.ok) {
+      // Handle token expiration
+      if (response.status === 401 && endpoint !== "/auth/login/refresh/") {
+        const refreshed = await refreshToken()
+        if (refreshed) {
+          // Retry with new token
+          config.headers.Authorization = `Bearer ${localStorage.getItem("access_token")}`
+          const retryResponse = await fetch(url, config)
+          const retryData = await retryResponse.json()
+          if (!retryResponse.ok) {
+            throw new ApiError(retryData.message || "An error occurred", retryResponse.status, retryData)
+          }
+          return retryData
+        }
+      }
+      // Silently handle server errors for instructor endpoints
+      if (endpoint.includes('/instructors/') && response.status >= 500) {
+        throw new ApiError("Server unavailable", response.status, data)
+      }
       throw new ApiError(data.message || "An error occurred", response.status, data)
     }
 
     return data
   } catch (error) {
-    console.error('=== API ERROR ===');
-    console.error('Error:', error);
-    console.error('=================');
-    
     if (error instanceof ApiError) {
       throw error
     }
     throw new ApiError("Network error occurred", 0, null)
+  }
+}
+
+async function refreshToken(): Promise<boolean> {
+  const refreshToken = localStorage.getItem("refresh_token")
+  if (!refreshToken) return false
+
+  try {
+    const response = await fetch(`${BASE_URL}/auth/login/refresh/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ refresh: refreshToken }),
+    })
+
+    if (response.ok) {
+      const data = await response.json()
+      localStorage.setItem("access_token", data.access)
+      return true
+    } else {
+      // Refresh token expired, logout user
+      localStorage.removeItem("access_token")
+      localStorage.removeItem("refresh_token")
+      window.location.href = "/login"
+      return false
+    }
+  } catch {
+    return false
   }
 }
 
@@ -95,11 +120,17 @@ export const authApi = {
       body: JSON.stringify({ phone_number, password }),
     }),
 
-  refresh: (refreshToken: string) =>
-    apiRequest("/auth/refresh/", {
+  refresh: async (refreshToken: string) => {
+    const response = await apiRequest("/auth/login/refresh/", {
       method: "POST",
       body: JSON.stringify({ refresh: refreshToken }),
-    }),
+    })
+    // Update stored access token
+    if (response.access) {
+      localStorage.setItem("access_token", response.access)
+    }
+    return response
+  },
 
   changePassword: (oldPassword: string, newPassword: string) =>
     apiRequest("/auth/change-password/", {
@@ -152,6 +183,44 @@ export const authApi = {
       })
     }
   },
+}
+
+// Instructor API functions
+export const instructorApi = {
+  getSingleInstructor: (id: string) =>
+    apiRequest(`/api/instructors/info/${id}/`, {
+      method: "GET",
+    }),
+  addInstructor: (instructorData: {
+    title: string
+    description: {
+      first: string
+      Education: string
+      Facebook: string
+      Youtube: string
+    }
+    experience: string
+  }) =>
+    apiRequest("/api/instructors/info/", {
+      method: "POST",
+      body: JSON.stringify(instructorData),
+    }),
+
+  getInstructors: () =>
+    apiRequest("/api/instructors/info/", {
+      method: "GET",
+    }),
+
+  updateInstructor: (id: string, instructorData: any) =>
+    apiRequest(`/api/instructors/info/${id}/`, {
+      method: "PATCH",
+      body: JSON.stringify(instructorData),
+    }),
+
+  deleteInstructor: (id: string) =>
+    apiRequest(`/api/instructors/${id}/`, {
+      method: "DELETE",
+    }),
 }
 
 export { ApiError }

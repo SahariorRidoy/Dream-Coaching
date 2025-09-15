@@ -27,24 +27,24 @@ export default function RegisterPage(): React.JSX.Element {
   const onSubmit = async (data: RegisterData): Promise<void> => {
     try {
       const response = await register(data.phone_number, data.password);
-      console.log('=== REGISTRATION RESPONSE ===');
-      console.log('Full Response:', response);
-      console.log('Response Keys:', Object.keys(response || {}));
-      console.log('OTP (if available):', response?.otp || 'Not in response');
-      console.log('Message:', response?.message || 'No message');
-      console.log('==============================');
+      // Registration successful - response processed
       
       // Store registration response in localStorage for verify page
       if (typeof window !== 'undefined') {
-        localStorage.setItem('registration_response', JSON.stringify(response));
-        localStorage.setItem('registration_phone', data.phone_number);
+        try {
+          localStorage.setItem('registration_response', JSON.stringify(response));
+          localStorage.setItem('registration_phone', data.phone_number);
+        } catch (error) {
+          // Handle localStorage quota exceeded or unavailable
+          console.warn('Failed to store registration data locally');
+        }
       }
       
       // setRegistrationPhone(data.phone_number);
       
       // Force redirect to verify OTP page
       const verifyUrl = `/verify-otp?phone_number=${encodeURIComponent(data.phone_number)}`;
-      console.log('Redirecting to:', verifyUrl);
+      // Redirecting to OTP verification
       
       // Use window.location for guaranteed redirect
       window.location.href = verifyUrl;

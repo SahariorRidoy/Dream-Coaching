@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,6 +8,35 @@ import { Label } from "@/components/ui/label";
 import { Mail, Phone, MapPin, Send, MessageCircle } from "lucide-react";
 
 const ContactPage: React.FC = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({ ...prev, [id]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      // Simulate form submission
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      alert('Message sent successfully! We\'ll get back to you soon.');
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } catch (error) {
+      alert('Failed to send message. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-primary/5 via-secondary/10 to-accent/10 py-16 px-4 overflow-hidden">
       {/* Decorative Blobs */}
@@ -96,53 +125,75 @@ const ContactPage: React.FC = () => {
               </p>
             </CardHeader>
             <CardContent className="space-y-5">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="name" className="text-sm font-medium text-foreground">
+                      Name
+                    </Label>
+                    <Input
+                      id="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      placeholder="Your Name"
+                      className="border-input focus:border-ring focus:ring-ring"
+                      required
+                      disabled={isSubmitting}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className="text-sm font-medium text-foreground">
+                      Email
+                    </Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder="you@email.com"
+                      className="border-input focus:border-ring focus:ring-ring"
+                      required
+                      disabled={isSubmitting}
+                    />
+                  </div>
+                </div>
                 <div className="space-y-2">
-                  <Label htmlFor="name" className="text-sm font-medium text-foreground">
-                    Name
+                  <Label htmlFor="subject" className="text-sm font-medium text-foreground">
+                    Subject
                   </Label>
                   <Input
-                    id="name"
-                    placeholder="Your Name"
+                    id="subject"
+                    value={formData.subject}
+                    onChange={handleInputChange}
+                    placeholder="How can we help?"
                     className="border-input focus:border-ring focus:ring-ring"
+                    required
+                    disabled={isSubmitting}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-sm font-medium text-foreground">
-                    Email
+                  <Label htmlFor="message" className="text-sm font-medium text-foreground">
+                    Message
                   </Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="you@email.com"
-                    className="border-input focus:border-ring focus:ring-ring"
+                  <Textarea
+                    id="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    placeholder="Type your message here..."
+                    className="h-32 border-input focus:border-ring focus:ring-ring resize-none"
+                    required
+                    disabled={isSubmitting}
                   />
                 </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="subject" className="text-sm font-medium text-foreground">
-                  Subject
-                </Label>
-                <Input
-                  id="subject"
-                  placeholder="How can we help?"
-                  className="border-input focus:border-ring focus:ring-ring"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="message" className="text-sm font-medium text-foreground">
-                  Message
-                </Label>
-                <Textarea
-                  id="message"
-                  placeholder="Type your message here..."
-                  className="h-32 border-input focus:border-ring focus:ring-ring resize-none"
-                />
-              </div>
-              <Button className="w-full bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-primary-foreground py-3 text-base font-semibold transition-all">
-                <Send className="w-4 h-4 mr-2" />
-                Send Message
-              </Button>
+                <Button 
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-primary-foreground py-3 text-base font-semibold transition-all disabled:opacity-50"
+                >
+                  <Send className="w-4 h-4 mr-2" />
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                </Button>
+              </form>
             </CardContent>
           </Card>
         </div>

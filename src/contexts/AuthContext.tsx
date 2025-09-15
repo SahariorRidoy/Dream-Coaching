@@ -75,6 +75,23 @@ const initialState: AuthState = {
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(authReducer, initialState)
+  
+  // Token refresh timer
+  const startTokenRefreshTimer = () => {
+    // Refresh token every 5.5 hours (30 minutes before expiration)
+    const refreshInterval = setInterval(async () => {
+      const refreshToken = localStorage.getItem("refresh_token")
+      if (refreshToken && state.isAuthenticated) {
+        try {
+          await authApi.refresh(refreshToken)
+        } catch {
+          logout()
+        }
+      }
+    }, 5.5 * 60 * 60 * 1000) // 5.5 hours in milliseconds
+    
+    return refreshInterval
+  }
 
   // Check for existing session on mount
   useEffect(() => {
@@ -86,6 +103,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
       
       const token = localStorage.getItem("access_token")
+      const refreshToken = localStorage.getItem("refresh_token")
       const isDemoAdmin = localStorage.getItem("demo_admin")
       
       if (isDemoAdmin === "true") {
@@ -97,12 +115,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return
       }
       
-      if (token) {
+      if (refreshToken) {
         try {
+          // Try to refresh token first if we have one
+          if (!token) {
+            await authApi.refresh(refreshToken)
+          }
           const profile = await authApi.getProfile()
           dispatch({ type: "SET_USER", payload: profile })
+          // Start refresh timer after successful auth
+          startTokenRefreshTimer()
         } catch {
-          // Token might be expired, clear it
+          // Refresh failed, clear tokens
           localStorage.removeItem("access_token")
           localStorage.removeItem("refresh_token")
           dispatch({ type: "LOGOUT" })
@@ -121,29 +145,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       dispatch({ type: "SET_LOADING", payload: true })
       dispatch({ type: "CLEAR_ERROR" })
 
-      console.log('=== API REGISTER REQUEST ===');
-      console.log('Phone:', phone_number);
-      console.log('Password:', password);
+
       
       const response = await authApi.register(phone_number, password)
       
-      console.log('=== API REGISTER RESPONSE ===');
-      console.log('Raw Response:', response);
-      console.log('Response Type:', typeof response);
-      console.log('Is Array:', Array.isArray(response));
-      if (response && typeof response === 'object') {
-        console.log('Response Keys:', Object.keys(response));
-        console.log('OTP Field:', response.otp);
-        console.log('Message Field:', response.message);
-      }
-      console.log('=============================');
+
       
       return response
     } catch (error) {
-      console.error('=== REGISTER ERROR ===');
-      console.error('Error:', error);
-      console.error('Error Message:', error instanceof Error ? error.message : 'Unknown error');
-      console.error('======================');
+
       
       const errorMessage = error instanceof Error ? error.message : 'An error occurred'
       dispatch({ type: "SET_ERROR", payload: errorMessage })
@@ -158,17 +168,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       dispatch({ type: "SET_LOADING", payload: true })
       dispatch({ type: "CLEAR_ERROR" })
 
-      console.log('=== VERIFY OTP REQUEST ===');
-      console.log('Phone:', phone_number);
-      console.log('OTP:', otp);
+
       
       const response = await authApi.verifyOtp(phone_number, otp)
       
-      console.log('=== VERIFY OTP RESPONSE ===');
-      console.log('Full Response:', response);
-      console.log('Response Keys:', Object.keys(response || {}));
-      console.log('Tokens Object:', response.tokens);
-      console.log('==========================');
+
 
       // Extract tokens from nested tokens object
       const accessToken = response.tokens?.access
@@ -177,16 +181,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (typeof window !== 'undefined') {
         if (accessToken) {
           localStorage.setItem("access_token", accessToken)
-          console.log('✅ Access token stored:', accessToken.substring(0, 20) + '...');
-        } else {
-          console.error('❌ No access token found in response.tokens');
         }
         
         if (refreshToken) {
           localStorage.setItem("refresh_token", refreshToken)
-          console.log('✅ Refresh token stored:', refreshToken.substring(0, 20) + '...');
-        } else {
-          console.error('❌ No refresh token found in response.tokens');
         }
       }
       
@@ -196,13 +194,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         is_verified: true
       }
       dispatch({ type: "SET_USER", payload: basicUser })
-      console.log('✅ User set as authenticated:', basicUser);
+
 
       return response
     } catch (error) {
-      console.error('=== VERIFY OTP ERROR ===');
-      console.error('Error:', error);
-      console.error('========================');
+
       
       const errorMessage = error instanceof Error ? error.message : 'An error occurred'
       dispatch({ type: "SET_ERROR", payload: errorMessage })
@@ -223,6 +219,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         localStorage.setItem("access_token", response.access)
         localStorage.setItem("refresh_token", response.refresh)
       }
+
+      // Start token refresh timer
+      startTokenRefreshTimer()
 
       // Get user profile
       const profile = await authApi.getProfile()
@@ -299,31 +298,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       dispatch({ type: "SET_LOADING", payload: true })
       dispatch({ type: "CLEAR_ERROR" })
 
-      console.log('=== UPDATE PROFILE REQUEST ===');
-      console.log('Profile Data:', profileData);
-      console.log('Profile Image:', profileImage);
-      console.log('Current User:', state.user);
+
       
       const response = await authApi.updateProfile(profileData, profileImage)
       
-      console.log('=== UPDATE PROFILE RESPONSE ===');
-      console.log('Response:', response);
-      console.log('===============================');
+
 
       // Update user state with new profile data
       dispatch({ type: "SET_USER", payload: response })
 
       return response
     } catch (error) {
-      console.error('=== UPDATE PROFILE ERROR ===');
-      console.error('Error:', error);
-      console.error('Error Type:', typeof error);
-      console.error('Error Keys:', error && typeof error === 'object' ? Object.keys(error) : 'Not an object');
-      if (error && typeof error === 'object' && 'status' in error) {
-        console.error('Status:', (error as any).status);
-        console.error('Data:', (error as any).data);
-      }
-      console.error('============================');
+
       
       const errorMessage = error instanceof Error ? error.message : 'An error occurred'
       dispatch({ type: "SET_ERROR", payload: errorMessage })

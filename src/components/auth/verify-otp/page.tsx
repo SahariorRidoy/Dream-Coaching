@@ -138,22 +138,7 @@ export default function VerifyOtpPage(): React.JSX.Element | null {
               </Alert>
             )}
 
-            {/* Development OTP Display */}
-            {registrationResponse && (
-              <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
-                <h3 className="font-semibold text-yellow-800 dark:text-yellow-200 mb-2">🔧 Development Info</h3>
-                <div className="text-sm space-y-1">
-                  <p><strong>OTP:</strong> <span className="font-mono bg-yellow-100 dark:bg-yellow-800 px-2 py-1 rounded">{registrationResponse.otp || 'Not found'}</span></p>
-                  <p><strong>Message:</strong> {registrationResponse.message || 'No message'}</p>
-                  <details className="mt-2">
-                    <summary className="cursor-pointer text-yellow-700 dark:text-yellow-300">Full Response</summary>
-                    <pre className="mt-1 text-xs bg-yellow-100 dark:bg-yellow-800 p-2 rounded overflow-auto">
-                      {JSON.stringify(registrationResponse, null, 2)}
-                    </pre>
-                  </details>
-                </div>
-              </div>
-            )}
+           
 
             <div className="space-y-2">
               <Label>Enter verification code</Label>

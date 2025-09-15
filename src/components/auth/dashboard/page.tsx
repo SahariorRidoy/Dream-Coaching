@@ -98,7 +98,7 @@ export default function DashboardPage(): React.JSX.Element {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+      <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
         <Navigation />
 
         <main className="max-w-7xl mx-auto py-4 sm:py-6 lg:py-8 px-4 sm:px-6 lg:px-8">
@@ -106,7 +106,7 @@ export default function DashboardPage(): React.JSX.Element {
           <div className="mb-6 sm:mb-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                   Welcome back, {getDisplayName()}!
                 </h1>
                 <p className="text-base sm:text-lg text-muted-foreground mt-2">
@@ -130,94 +130,94 @@ export default function DashboardPage(): React.JSX.Element {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
             {isAdmin ? (
               <>
-                <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white border-0">
+                <Card className="bg-gradient-to-br from-primary to-primary/90 text-primary-foreground border-0">
                   <CardContent className="p-4 sm:p-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-blue-100 text-xs sm:text-sm font-medium">Total Students</p>
+                        <p className="text-primary-foreground/80 text-xs sm:text-sm font-medium">Total Students</p>
                         <p className="text-2xl sm:text-3xl font-bold">{stats.totalStudents}</p>
                       </div>
-                      <Users className="h-6 w-6 sm:h-8 sm:w-8 text-blue-200" />
+                      <Users className="h-6 w-6 sm:h-8 sm:w-8 text-primary-foreground/70" />
                     </div>
                   </CardContent>
                 </Card>
-                <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white border-0">
+                <Card className="bg-gradient-to-br from-secondary to-secondary/90 text-secondary-foreground border-0">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-green-100 text-sm font-medium">Active Courses</p>
+                        <p className="text-secondary-foreground/80 text-sm font-medium">Active Courses</p>
                         <p className="text-3xl font-bold">{stats.totalCourses}</p>
                       </div>
-                      <BookOpen className="h-8 w-8 text-green-200" />
+                      <BookOpen className="h-8 w-8 text-secondary-foreground/70" />
                     </div>
                   </CardContent>
                 </Card>
-                <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white border-0">
+                <Card className="bg-gradient-to-br from-accent to-accent/90 text-accent-foreground border-0">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-purple-100 text-sm font-medium">Lessons Completed</p>
+                        <p className="text-accent-foreground/80 text-sm font-medium">Lessons Completed</p>
                         <p className="text-3xl font-bold">{stats.completedLessons}</p>
                       </div>
-                      <Award className="h-8 w-8 text-purple-200" />
+                      <Award className="h-8 w-8 text-accent-foreground/70" />
                     </div>
                   </CardContent>
                 </Card>
-                <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white border-0">
+                <Card className="bg-gradient-to-br from-primary/80 to-secondary/80 text-primary-foreground border-0">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-orange-100 text-sm font-medium">Upcoming Classes</p>
+                        <p className="text-primary-foreground/80 text-sm font-medium">Upcoming Classes</p>
                         <p className="text-3xl font-bold">{stats.upcomingClasses}</p>
                       </div>
-                      <Calendar className="h-8 w-8 text-orange-200" />
+                      <Calendar className="h-8 w-8 text-primary-foreground/70" />
                     </div>
                   </CardContent>
                 </Card>
               </>
             ) : (
               <>
-                <Card className="bg-gradient-to-br from-indigo-500 to-indigo-600 text-white border-0">
+                <Card className="bg-gradient-to-br from-primary to-primary/90 text-primary-foreground border-0">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-indigo-100 text-sm font-medium">Lessons Completed</p>
+                        <p className="text-primary-foreground/80 text-sm font-medium">Lessons Completed</p>
                         <p className="text-3xl font-bold">{stats.completedLessons}</p>
                       </div>
-                      <BookMarked className="h-8 w-8 text-indigo-200" />
+                      <BookMarked className="h-8 w-8 text-primary-foreground/70" />
                     </div>
                   </CardContent>
                 </Card>
-                <Card className="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white border-0">
+                <Card className="bg-gradient-to-br from-secondary to-secondary/90 text-secondary-foreground border-0">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-emerald-100 text-sm font-medium">Overall Progress</p>
+                        <p className="text-secondary-foreground/80 text-sm font-medium">Overall Progress</p>
                         <p className="text-3xl font-bold">{stats.progress}%</p>
                       </div>
-                      <TrendingUp className="h-8 w-8 text-emerald-200" />
+                      <TrendingUp className="h-8 w-8 text-secondary-foreground/70" />
                     </div>
                   </CardContent>
                 </Card>
-                <Card className="bg-gradient-to-br from-amber-500 to-amber-600 text-white border-0">
+                <Card className="bg-gradient-to-br from-accent to-accent/90 text-accent-foreground border-0">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-amber-100 text-sm font-medium">Class Rank</p>
+                        <p className="text-accent-foreground/80 text-sm font-medium">Class Rank</p>
                         <p className="text-3xl font-bold">#{stats.rank}</p>
                       </div>
-                      <Trophy className="h-8 w-8 text-amber-200" />
+                      <Trophy className="h-8 w-8 text-accent-foreground/70" />
                     </div>
                   </CardContent>
                 </Card>
-                <Card className="bg-gradient-to-br from-rose-500 to-rose-600 text-white border-0">
+                <Card className="bg-gradient-to-br from-primary/80 to-secondary/80 text-primary-foreground border-0">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-rose-100 text-sm font-medium">Upcoming Classes</p>
+                        <p className="text-primary-foreground/80 text-sm font-medium">Upcoming Classes</p>
                         <p className="text-3xl font-bold">{stats.upcomingClasses}</p>
                       </div>
-                      <Clock className="h-8 w-8 text-rose-200" />
+                      <Clock className="h-8 w-8 text-primary-foreground/70" />
                     </div>
                   </CardContent>
                 </Card>
@@ -232,7 +232,7 @@ export default function DashboardPage(): React.JSX.Element {
               <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <Target className="h-5 w-5 text-blue-600" />
+                    <Target className="h-5 w-5 text-primary" />
                     {isAdmin ? "Admin Actions" : "Quick Actions"}
                   </CardTitle>
                   <CardDescription>
@@ -243,78 +243,87 @@ export default function DashboardPage(): React.JSX.Element {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     {isAdmin ? (
                       <>
-                        <Button className="h-auto p-3 sm:p-4 justify-start bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700" asChild>
+                        <Button className="h-auto p-3 sm:p-4 justify-start bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary/80" asChild>
                           <Link href="/admin/students" className="flex items-center gap-2 sm:gap-3">
                             <UserCheck className="h-4 w-4 sm:h-5 sm:w-5" />
                             <div className="text-left">
                               <div className="font-medium text-sm sm:text-base">Manage Students</div>
-                              <div className="text-xs text-blue-100 hidden sm:block">View and manage student accounts</div>
+                              <div className="text-xs text-primary-foreground/80 hidden sm:block">View and manage student accounts</div>
                             </div>
                           </Link>
                         </Button>
-                        <Button className="h-auto p-4 justify-start bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700" asChild>
+                        <Button className="h-auto p-4 justify-start bg-gradient-to-r from-secondary to-secondary/90 hover:from-secondary/90 hover:to-secondary/80" asChild>
                           <Link href="/admin/courses" className="flex items-center gap-3">
                             <BookOpen className="h-5 w-5" />
                             <div className="text-left">
                               <div className="font-medium">Manage Courses</div>
-                              <div className="text-xs text-green-100">Create and edit courses</div>
+                              <div className="text-xs text-secondary-foreground/80">Create and edit courses</div>
                             </div>
                           </Link>
                         </Button>
-                        <Button className="h-auto p-4 justify-start bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700" asChild>
+                        <Button className="h-auto p-4 justify-start bg-gradient-to-r from-accent to-accent/90 hover:from-accent/90 hover:to-accent/80" asChild>
+                          <Link href="/dashboard/instructors" className="flex items-center gap-3">
+                            <Users className="h-5 w-5" />
+                            <div className="text-left">
+                              <div className="font-medium">Manage Instructors</div>
+                              <div className="text-xs text-accent-foreground/80">Add and manage teaching staff</div>
+                            </div>
+                          </Link>
+                        </Button>
+                        <Button className="h-auto p-4 justify-start bg-gradient-to-r from-primary/80 to-secondary/80 hover:from-primary/70 hover:to-secondary/70" asChild>
                           <Link href="/admin/schedule" className="flex items-center gap-3">
                             <Calendar className="h-5 w-5" />
                             <div className="text-left">
                               <div className="font-medium">Class Schedule</div>
-                              <div className="text-xs text-purple-100">Manage class timetables</div>
+                              <div className="text-xs text-primary-foreground/80">Manage class timetables</div>
                             </div>
                           </Link>
                         </Button>
-                        <Button className="h-auto p-4 justify-start bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700" asChild>
+                        <Button className="h-auto p-4 justify-start bg-gradient-to-r from-secondary/80 to-accent/80 hover:from-secondary/70 hover:to-accent/70" asChild>
                           <Link href="/admin/analytics" className="flex items-center gap-3">
                             <BarChart3 className="h-5 w-5" />
-                            <div className="text-left">
+                          <div className="text-left">
                               <div className="font-medium">Analytics</div>
-                              <div className="text-xs text-orange-100">View performance reports</div>
+                              <div className="text-xs text-secondary-foreground/80">View performance reports</div>
                             </div>
                           </Link>
                         </Button>
                       </>
                     ) : (
                       <>
-                        <Button className="h-auto p-4 justify-start bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700" asChild>
+                        <Button className="h-auto p-4 justify-start bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary/80" asChild>
                           <Link href="/student/courses" className="flex items-center gap-3">
                             <BookOpen className="h-5 w-5" />
                             <div className="text-left">
                               <div className="font-medium">My Courses</div>
-                              <div className="text-xs text-indigo-100">Continue learning</div>
+                              <div className="text-xs text-primary-foreground/80">Continue learning</div>
                             </div>
                           </Link>
                         </Button>
-                        <Button className="h-auto p-4 justify-start bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700" asChild>
+                        <Button className="h-auto p-4 justify-start bg-gradient-to-r from-secondary to-secondary/90 hover:from-secondary/90 hover:to-secondary/80" asChild>
                           <Link href="/student/assignments" className="flex items-center gap-3">
                             <Edit className="h-5 w-5" />
                             <div className="text-left">
                               <div className="font-medium">Assignments</div>
-                              <div className="text-xs text-emerald-100">Submit your work</div>
+                              <div className="text-xs text-secondary-foreground/80">Submit your work</div>
                             </div>
                           </Link>
                         </Button>
-                        <Button className="h-auto p-4 justify-start bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700" asChild>
+                        <Button className="h-auto p-4 justify-start bg-gradient-to-r from-accent to-accent/90 hover:from-accent/90 hover:to-accent/80" asChild>
                           <Link href="/student/schedule" className="flex items-center gap-3">
                             <Calendar className="h-5 w-5" />
                             <div className="text-left">
                               <div className="font-medium">Class Schedule</div>
-                              <div className="text-xs text-amber-100">View your timetable</div>
+                              <div className="text-xs text-accent-foreground/80">View your timetable</div>
                             </div>
                           </Link>
                         </Button>
-                        <Button className="h-auto p-4 justify-start bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700" asChild>
+                        <Button className="h-auto p-4 justify-start bg-gradient-to-r from-primary/80 to-secondary/80 hover:from-primary/70 hover:to-secondary/70" asChild>
                           <Link href="/student/progress" className="flex items-center gap-3">
                             <TrendingUp className="h-5 w-5" />
                             <div className="text-left">
                               <div className="font-medium">My Progress</div>
-                              <div className="text-xs text-rose-100">Track your performance</div>
+                              <div className="text-xs text-primary-foreground/80">Track your performance</div>
                             </div>
                           </Link>
                         </Button>
@@ -328,7 +337,7 @@ export default function DashboardPage(): React.JSX.Element {
               <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <Clock className="h-5 w-5 text-green-600" />
+                    <Clock className="h-5 w-5 text-secondary" />
                     Recent Activity
                   </CardTitle>
                   <CardDescription>Your latest actions and achievements</CardDescription>
@@ -364,7 +373,7 @@ export default function DashboardPage(): React.JSX.Element {
               <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <User className="h-5 w-5 text-blue-600" />
+                    <User className="h-5 w-5 text-primary" />
                     Profile
                   </CardTitle>
                 </CardHeader>
@@ -374,7 +383,7 @@ export default function DashboardPage(): React.JSX.Element {
                       {user?.profile_image && (
                         <AvatarImage src={user.profile_image} alt={getDisplayName()} />
                       )}
-                      <AvatarFallback className="text-lg bg-gradient-to-br from-blue-500 to-indigo-600 text-white">
+                      <AvatarFallback className="text-lg bg-gradient-to-br from-primary to-secondary text-primary-foreground">
                         {getInitials()}
                       </AvatarFallback>
                     </Avatar>
@@ -407,17 +416,17 @@ export default function DashboardPage(): React.JSX.Element {
               <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <Calendar className="h-5 w-5 text-purple-600" />
+                    <Calendar className="h-5 w-5 text-accent" />
                     Upcoming Classes
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
                     {upcomingClasses.slice(0, 3).map((classItem) => (
-                      <div key={classItem.id} className="p-3 rounded-lg bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 border border-purple-100 dark:border-purple-800">
+                      <div key={classItem.id} className="p-3 rounded-lg bg-gradient-to-r from-accent/10 to-primary/10 border border-accent/20">
                         <h4 className="font-medium text-sm">{classItem.subject}</h4>
                         <p className="text-xs text-muted-foreground">{classItem.time}</p>
-                        <p className="text-xs text-purple-600 dark:text-purple-400">{classItem.instructor}</p>
+                        <p className="text-xs text-accent">{classItem.instructor}</p>
                       </div>
                     ))}
                     <Button variant="outline" className="w-full" asChild>
@@ -430,9 +439,9 @@ export default function DashboardPage(): React.JSX.Element {
               </Card>
 
               {!isAdmin && (
-                <Card className="border-0 shadow-lg bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20">
+                <Card className="border-0 shadow-lg bg-gradient-to-br from-secondary/10 to-accent/10">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-green-700 dark:text-green-400">
+                    <CardTitle className="flex items-center gap-2 text-secondary">
                       <Star className="h-5 w-5" />
                       Learning Progress
                     </CardTitle>
@@ -448,7 +457,7 @@ export default function DashboardPage(): React.JSX.Element {
                       </div>
                       <div className="text-center">
                         <p className="text-sm text-muted-foreground mb-2">Keep up the great work!</p>
-                        <Button size="sm" className="bg-green-600 hover:bg-green-700" asChild>
+                        <Button size="sm" className="bg-secondary hover:bg-secondary/90" asChild>
                           <Link href="/student/courses">
                             Continue Learning
                           </Link>

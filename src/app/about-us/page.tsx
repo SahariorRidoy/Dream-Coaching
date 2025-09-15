@@ -13,6 +13,7 @@ import {
   LucideIcon,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface AdminMember {
   name: string
@@ -313,13 +314,13 @@ const AboutUsPage: React.FC = () => {
           <p className="text-muted-foreground mb-8 animate-fade-in" style={{ animationDelay: "100ms" }}>
             Join thousands of successful students and experience the Dream Coaching difference.
           </p>
-          <a
+          <Link
             href="/courses"
             className="inline-block bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-primary-foreground font-semibold px-8 py-4 rounded-xl shadow-lg transition-all duration-300 animate-fade-in"
             style={{ animationDelay: "200ms" }}
           >
             Explore Our Courses
-          </a>
+          </Link>
         </div>
       </section>
 

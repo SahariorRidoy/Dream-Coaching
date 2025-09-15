@@ -97,16 +97,16 @@ export default function InstructorsPage() {
         title: formData.title,
         description: {
           first: formData.first,
-          Education: formData.education,
-          Facebook: formData.facebook,
-          Youtube: formData.youtube
+          ...(formData.education && { Education: formData.education }),
+          ...(formData.facebook && { Facebook: formData.facebook }),
+          ...(formData.youtube && { Youtube: formData.youtube })
         },
         experience: formData.experience
       }
 
       // Validate payload
       const validatedData = instructorSchema.parse(payload)
-      await instructorApi.addInstructor(validatedData)
+      await instructorApi.addInstructor(validatedData as any)
       
       toast({
         title: "Success!",

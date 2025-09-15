@@ -195,9 +195,9 @@ export const instructorApi = {
     title: string
     description: {
       first: string
-      Education: string
-      Facebook: string
-      Youtube: string
+      Education?: string
+      Facebook?: string
+      Youtube?: string
     }
     experience: string
   }) =>

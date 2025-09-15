@@ -7,6 +7,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Slide {
   title: string
@@ -89,13 +90,13 @@ export default function FeaturedSection() {
             <div className="absolute bottom-4 left-4 right-4 md:left-6 md:right-6">
               <div className="backdrop-blur-sm bg-background/80 text-foreground border border-border rounded-2xl px-5 py-4 md:px-6 md:py-5 shadow-lg flex items-center justify-between gap-4">
                 <div className="text-lg md:text-2xl font-bold leading-tight">{slide.title}</div>
-                <a
+                <Link
                   href="/courses"
                   className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-semibold shadow-md hover:bg-primary/90 transition-colors whitespace-nowrap"
                 >
                   View
                   <svg className="size-4" viewBox="0 0 20 20" fill="currentColor"><path d="M7.293 14.707a1 1 0 0 1 0-1.414L10.586 10 7.293 6.707a1 1 0 1 1 1.414-1.414l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414 0Z"/></svg>
-                </a>
+                </Link>
               </div>
             </div>
           </SwiperSlide>

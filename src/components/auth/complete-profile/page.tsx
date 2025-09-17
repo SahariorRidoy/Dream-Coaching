@@ -11,6 +11,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Progress } from "@/components/ui/progress"
 import { User, Mail, Calendar, CheckCircle, ArrowRight, ArrowLeft, Upload, Camera } from "lucide-react"
 import Image from "next/image"
+import { useToast } from "@/hooks/use-toast"
 
 interface ProfileData {
   full_name: string
@@ -31,13 +32,14 @@ export default function CompleteProfilePage(): React.JSX.Element {
     full_name: "",
     gender: "",
     email: "",
-    birth_date: ""
+    birth_date: new Date(new Date().getFullYear() - 18, 0, 1).toISOString().split('T')[0]
   })
   const [profileImage, setProfileImage] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
   const { updateProfile, error, user } = useAuth()
+  const { toast } = useToast()
 
   const totalSteps = 2
   const progress = (currentStep / totalSteps) * 100
@@ -83,12 +85,18 @@ export default function CompleteProfilePage(): React.JSX.Element {
         ip: 'auto-detected' // Backend should handle IP detection
       }
       
-      console.log('Sending profile data:', profileData)
-      console.log('Profile image:', profileImage)
       await updateProfile(profileData, profileImage)
+      toast({
+        title: "Profile Completed!",
+        description: "Welcome to Dream Coaching. Your profile has been set up successfully.",
+      })
       router.push("/dashboard")
-    } catch (error) {
-      console.error("Profile update failed:", error)
+    } catch {
+      toast({
+        title: "Error",
+        description: "Failed to complete profile. Please try again.",
+        variant: "destructive"
+      })
     } finally {
       setIsSubmitting(false)
     }
@@ -230,9 +238,12 @@ export default function CompleteProfilePage(): React.JSX.Element {
                     type="date"
                     value={formData.birth_date}
                     onChange={(e) => updateField("birth_date", e.target.value)}
+                    min={new Date(new Date().getFullYear() - 80, 0, 1).toISOString().split('T')[0]}
+                    max={new Date(new Date().getFullYear() - 10, 11, 31).toISOString().split('T')[0]}
                     className="pl-10 h-12"
                   />
                 </div>
+                <p className="text-xs text-muted-foreground">You must be between 10 and 80 years old</p>
               </div>
 
               <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">

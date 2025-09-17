@@ -5,8 +5,8 @@ export const instructorSchema = z.object({
   description: z.object({
     first: z.string().min(1, 'Name is required'),
     Education: z.string().optional(),
-    Facebook: z.string().url('Invalid Facebook URL').optional().or(z.literal('')),
-    Youtube: z.string().url('Invalid YouTube URL').optional().or(z.literal(''))
+    Facebook: z.string().optional(),
+    Youtube: z.string().optional()
   }),
   experience: z.string().min(1, 'Experience is required')
 })

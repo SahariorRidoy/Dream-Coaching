@@ -1,25 +1,21 @@
 "use client"
 
-import { useState } from "react"
-import { useAuth } from "@/contexts/AuthContext"
+import { useState, useCallback } from "react"
 
 export function useAuthForm() {
   const [formData, setFormData] = useState<Record<string, any>>({})
   const [errors, setErrors] = useState<Record<string, string | null>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const { clearError } = useAuth()
 
-  const updateField = (field: string, value: any) => {
+
+  const updateField = useCallback((field: string, value: any) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
 
     // Clear field error when user starts typing
     if ((errors as any)[field]) {
       setErrors((prev) => ({ ...prev, [field]: null }))
     }
-
-    // Clear auth context error
-    clearError()
-  }
+  }, [errors])
 
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/

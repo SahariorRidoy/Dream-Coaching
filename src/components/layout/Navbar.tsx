@@ -39,7 +39,7 @@ export default function Navbar() {
   const authenticatedLinks: NavLink[] = [
     { href: "/", label: "Home" },
     { href: "/courses", label: "Courses" },
-    ...(user?.role !== 'admin' && user?.user_type !== 'admin' ? [{ href: "/my-learning", label: "My Learning" }] : []),
+    ...(user?.user_type !== 'admin' ? [{ href: "/my-learning", label: "My Learning" }] : []),
     { href: "/instructors", label: "Instructors" },
     { href: "/about-us", label: "About Us" },
     { href: "/contact", label: "Contact Us" },
@@ -49,7 +49,6 @@ export default function Navbar() {
 
   const handleLogout = () => {
     logout();
-    router.push("/");
   };
 
   return (
@@ -138,7 +137,7 @@ export default function Navbar() {
                       <User className="mr-2 h-4 w-4" />
                       Dashboard
                     </Button>
-                    {user.role !== 'admin' && user.user_type !== 'admin' && (
+                    {user.user_type !== 'admin' && (
                       <Button
                         variant="ghost"
                         className="w-full justify-start"
@@ -212,7 +211,7 @@ export default function Navbar() {
                   <User className="mr-2 h-4 w-4 text-primary" />
                   <span className="text-gray-700">Dashboard</span>
                 </DropdownMenuItem>
-                {user.role !== 'admin' && user.user_type !== 'admin' && (
+                {user.user_type !== 'admin' && (
                   <DropdownMenuItem 
                     className="cursor-pointer hover:bg-secondary/10 transition-colors duration-200 rounded-lg mx-1 my-1"
                     onClick={() => router.push("/my-learning")}

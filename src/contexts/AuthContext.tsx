@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useReducer, useEffect, useCallback, ReactNode } from "react"
+import { createContext, useContext, useReducer, useEffect, ReactNode } from "react"
 import { authApi } from "@/lib/api"
 
 interface User {
@@ -32,6 +32,7 @@ interface AuthContextType extends AuthState {
   changePassword: (oldPassword: string, newPassword: string) => Promise<any>
   forgetPassword: (phone_number: string) => Promise<any>
   resetPassword: (phone_number: string, otp: string, newPassword: string) => Promise<any>
+  completeProfile: (profileData: any, profileImage?: File | null) => Promise<any>
   updateProfile: (profileData: any, profileImage?: File | null) => Promise<any>
   clearError: () => void
 }
@@ -76,22 +77,7 @@ const initialState: AuthState = {
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(authReducer, initialState)
   
-  // Token refresh timer
-  const startTokenRefreshTimer = useCallback(() => {
-    // Refresh token every 5.5 hours (30 minutes before expiration)
-    const refreshInterval = setInterval(async () => {
-      const refreshToken = localStorage.getItem("refresh_token")
-      if (refreshToken && state.isAuthenticated) {
-        try {
-          await authApi.refresh(refreshToken)
-        } catch {
-          logout()
-        }
-      }
-    }, 5.5 * 60 * 60 * 1000) // 5.5 hours in milliseconds
-    
-    return refreshInterval
-  }, [state.isAuthenticated])
+
 
   // Check for existing session on mount
   useEffect(() => {
@@ -104,16 +90,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       
       const token = localStorage.getItem("access_token")
       const refreshToken = localStorage.getItem("refresh_token")
-      const isDemoAdmin = localStorage.getItem("demo_admin")
-      
-      if (isDemoAdmin === "true") {
-        // Handle demo admin mode
-        const demoUser = localStorage.getItem("demo_user")
-        if (demoUser) {
-          dispatch({ type: "SET_USER", payload: JSON.parse(demoUser) })
-        }
-        return
-      }
       
       if (refreshToken) {
         try {
@@ -123,8 +99,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           }
           const profile = await authApi.getProfile()
           dispatch({ type: "SET_USER", payload: profile })
-          // Start refresh timer after successful auth
-          startTokenRefreshTimer()
         } catch {
           // Refresh failed, clear tokens
           localStorage.removeItem("access_token")
@@ -137,7 +111,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     checkAuth()
-  }, [startTokenRefreshTimer])
+  }, [])
 
   // Auth actions
   const register = async (phone_number: string, password: string) => {
@@ -220,16 +194,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         localStorage.setItem("refresh_token", response.refresh)
       }
 
-      // Start token refresh timer
-      startTokenRefreshTimer()
-
       // Get user profile
       const profile = await authApi.getProfile()
       dispatch({ type: "SET_USER", payload: profile })
 
       return response
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'An error occurred'
+    } catch (error: any) {
+      let errorMessage = 'An error occurred'
+      if (error?.status === 400) {
+        errorMessage = 'Invalid phone number or password'
+      } else if (error instanceof Error) {
+        errorMessage = error.message
+      }
       dispatch({ type: "SET_ERROR", payload: errorMessage })
       throw error
     }
@@ -239,8 +215,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (typeof window !== 'undefined') {
       localStorage.removeItem("access_token")
       localStorage.removeItem("refresh_token")
-      localStorage.removeItem("demo_admin")
-      localStorage.removeItem("demo_user")
     }
     dispatch({ type: "LOGOUT" })
   }
@@ -293,24 +267,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  const completeProfile = async (profileData: any, profileImage?: File | null) => {
+    try {
+      dispatch({ type: "SET_LOADING", payload: true })
+      dispatch({ type: "CLEAR_ERROR" })
+      
+      const response = await authApi.completeProfile(profileData, profileImage)
+      dispatch({ type: "SET_USER", payload: response })
+      return response
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'An error occurred'
+      dispatch({ type: "SET_ERROR", payload: errorMessage })
+      throw error
+    } finally {
+      dispatch({ type: "SET_LOADING", payload: false })
+    }
+  }
+
   const updateProfile = async (profileData: any, profileImage?: File | null) => {
     try {
       dispatch({ type: "SET_LOADING", payload: true })
       dispatch({ type: "CLEAR_ERROR" })
-
-
       
       const response = await authApi.updateProfile(profileData, profileImage)
-      
-
-
-      // Update user state with new profile data
       dispatch({ type: "SET_USER", payload: response })
-
       return response
     } catch (error) {
-
-      
       const errorMessage = error instanceof Error ? error.message : 'An error occurred'
       dispatch({ type: "SET_ERROR", payload: errorMessage })
       throw error
@@ -332,6 +314,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     changePassword,
     forgetPassword,
     resetPassword,
+    completeProfile,
     updateProfile,
     clearError,
   }

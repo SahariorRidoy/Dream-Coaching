@@ -162,9 +162,32 @@ export const authApi = {
       method: "GET",
     }),
 
+  // Initial profile setup for new users (includes user_type: "student")
+  completeProfile: (profileData: any, profileImage?: File | null) => {
+    const dataWithUserType = { ...profileData, user_type: "student" }
+    
+    if (profileImage) {
+      const formData = new FormData()
+      Object.keys(dataWithUserType).forEach(key => {
+        formData.append(key, dataWithUserType[key])
+      })
+      formData.append('profile_image', profileImage)
+      
+      return apiRequest("/auth/profile/", {
+        method: "PATCH",
+        body: formData,
+      })
+    } else {
+      return apiRequest("/auth/profile/", {
+        method: "PATCH",
+        body: JSON.stringify(dataWithUserType),
+      })
+    }
+  },
+
+  // Dashboard profile updates (does NOT modify user_type)
   updateProfile: (profileData: any, profileImage?: File | null) => {
     if (profileImage) {
-      // Use FormData for image upload
       const formData = new FormData()
       Object.keys(profileData).forEach(key => {
         formData.append(key, profileData[key])
@@ -176,7 +199,6 @@ export const authApi = {
         body: formData,
       })
     } else {
-      // Use JSON for data only
       return apiRequest("/auth/profile/", {
         method: "PATCH",
         body: JSON.stringify(profileData),

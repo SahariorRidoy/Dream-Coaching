@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react"
 import { useParams, useRouter } from "next/navigation"
+import AdminRoute from "@/components/ui/AdminRoute"
+import ProtectedRoute from "@/components/ui/ProtectedRoute"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -157,7 +159,9 @@ export default function InstructorDetailsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-muted/5 to-background">
+    <ProtectedRoute>
+      <AdminRoute>
+        <div className="min-h-screen bg-gradient-to-br from-background via-muted/5 to-background">
       <div className="container mx-auto px-6 py-8 max-w-7xl">
         {/* Professional Header */}
         <div className="bg-gradient-to-r from-primary/5 via-secondary/5 to-accent/5 rounded-2xl p-8 mb-8">
@@ -476,5 +480,7 @@ export default function InstructorDetailsPage() {
         </ProfessionalModal>
       </div>
     </div>
+      </AdminRoute>
+    </ProtectedRoute>
   )
 }

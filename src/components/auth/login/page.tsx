@@ -11,6 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Eye, EyeOff, Phone, Lock, Shield } from "lucide-react"
 import Link from "next/link"
+import { useToast } from "@/hooks/use-toast"
 
 interface LoginData {
   phone_number: string
@@ -22,37 +23,25 @@ export default function LoginPage(): React.JSX.Element {
   const router = useRouter()
   const { login, error, loading } = useAuth()
   const { formData, errors, isSubmitting, updateField, handleSubmit } = useAuthForm()
+  const { toast } = useToast()
 
-  // Default admin credentials
-  const defaultAdmin = {
-    phone_number: "01700000000",
-    password: "admin123"
-  }
 
-  const loginAsAdmin = () => {
-    // Set demo admin mode in localStorage
-    localStorage.setItem("demo_admin", "true")
-    localStorage.setItem("access_token", "demo_admin_token")
-    
-    // Set mock admin user data
-    const mockAdminUser = {
-      id: "admin_demo",
-      phone_number: defaultAdmin.phone_number,
-      first_name: "Admin",
-      last_name: "Demo",
-      role: "admin",
-      user_type: "admin"
-    }
-    
-    localStorage.setItem("demo_user", JSON.stringify(mockAdminUser))
-    
-    // Force redirect using window.location
-    window.location.href = "/dashboard"
-  }
 
   const onSubmit = async (data: LoginData): Promise<void> => {
-    await login(data.phone_number, data.password)
-    router.push("/dashboard")
+    try {
+      await login(data.phone_number, data.password)
+      toast({
+        title: "Welcome back!",
+        description: "You have successfully signed in to your account.",
+      })
+      router.push("/dashboard")
+    } catch {
+      toast({
+        title: "Login Failed",
+        description: "Please check your credentials and try again.",
+        variant: "destructive"
+      })
+    }
   }
 
   const handleFormSubmit = async (e: React.FormEvent): Promise<void> => {
@@ -197,29 +186,6 @@ export default function LoginPage(): React.JSX.Element {
 
               <div className="mt-8 text-center">
                 <div className="relative">
-                  <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-border/50" />
-                  </div>
-                  <div className="relative flex justify-center text-sm">
-                    <span className="bg-card px-4 text-muted-foreground">Quick Access</span>
-                  </div>
-                </div>
-                <div className="mt-4 space-y-3">
-                  <Button
-                    onClick={loginAsAdmin}
-                    variant="outline"
-                    className="w-full bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 border-orange-200 text-orange-700 hover:text-orange-800"
-                    disabled={isSubmitting || loading}
-                  >
-                    <Shield className="w-4 h-4 mr-2" />
-                    Demo Admin Dashboard
-                  </Button>
-                  <div className="text-xs text-muted-foreground">
-                    Phone: {defaultAdmin.phone_number} | Password: {defaultAdmin.password}
-                  </div>
-                </div>
-                
-                <div className="relative mt-6">
                   <div className="absolute inset-0 flex items-center">
                     <div className="w-full border-t border-border/50" />
                   </div>

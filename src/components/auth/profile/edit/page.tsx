@@ -11,8 +11,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { ArrowLeft, User, Phone, Save, CheckCircle, Mail, Calendar, Upload, Camera, Edit, Shield } from "lucide-react"
+import { ArrowLeft, User, Phone, Save, Mail, Calendar, Upload, Camera, Edit, Shield } from "lucide-react"
 import Link from "next/link"
+import { useToast } from "@/hooks/use-toast"
 
 interface ProfileData {
   full_name: string
@@ -23,19 +24,14 @@ interface ProfileData {
 }
 
 export default function EditProfilePage(): React.JSX.Element | null {
-  const [success, setSuccess] = useState<boolean>(false)
+
   const [profileImage, setProfileImage] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
 
-  const { user, isAuthenticated, updateProfile, error, loading } = useAuth()
+  const { user, updateProfile, error, loading } = useAuth()
   const { formData, errors, isSubmitting, updateField, handleSubmit } = useAuthForm()
   const router = useRouter()
-
-  useEffect(() => {
-    if (!loading && !isAuthenticated) {
-      router.push("/login")
-    }
-  }, [isAuthenticated, loading, router])
+  const { toast } = useToast()
 
   useEffect(() => {
     if (user) {
@@ -84,23 +80,28 @@ export default function EditProfilePage(): React.JSX.Element | null {
       birth_date: data.birth_date || "",
     }
 
-    console.log("Sending profile data:", profileData)
-    console.log("Profile image:", profileImage)
     await updateProfile(profileData, profileImage)
-    setSuccess(true)
-
-    setTimeout(() => {
-      router.push("/profile")
-    }, 2000)
+    toast({
+      title: "Profile Updated!",
+      description: "Your profile information has been saved successfully.",
+    })
+    router.push("/profile")
   }
 
   const handleFormSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault()
-    // Remove phone_number from validation - it's not editable
-    await handleSubmit(onSubmit, ["full_name", "email", "gender", "birth_date"], {
-      full_name: { required: true },
-      email: { required: true, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Please enter a valid email" },
-    })
+    try {
+      await handleSubmit(onSubmit, ["full_name", "email", "gender", "birth_date"], {
+        full_name: { required: true },
+        email: { required: true, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Please enter a valid email" },
+      })
+    } catch {
+      toast({
+        title: "Update Failed",
+        description: "Failed to update profile. Please try again.",
+        variant: "destructive"
+      })
+    }
   }
 
   // const validatePhoneNumber = (phone?: string): boolean => {
@@ -109,55 +110,9 @@ export default function EditProfilePage(): React.JSX.Element | null {
   //   return phoneRegex.test(phone)
   // }
 
-  if (success) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-green-900/20 dark:via-emerald-900/20 dark:to-teal-900/20 flex items-center justify-center p-4">
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute inset-0 bg-gradient-to-br from-green-100/20 to-emerald-100/20 dark:from-green-800/10 dark:to-emerald-800/10" />
-        </div>
-        <Card className="w-full max-w-md border-0 shadow-2xl bg-white/90 backdrop-blur-xl relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-emerald-500/10" />
-          <CardHeader className="text-center relative z-10 pb-8">
-            <div className="mx-auto mb-4 w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center">
-              <CheckCircle className="h-8 w-8 text-white" />
-            </div>
-            <CardTitle className="text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
-              Profile Updated Successfully
-            </CardTitle>
-            <CardDescription className="text-lg mt-2">
-              Your profile information has been saved
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="relative z-10 text-center">
-            <div className="space-y-4">
-              <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
-                <p className="text-sm text-green-800 dark:text-green-200">
-                  Your changes have been applied successfully. Redirecting to your profile page.
-                </p>
-              </div>
-              <div className="flex items-center justify-center space-x-2 text-sm text-muted-foreground">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-green-600" />
-                <span>Redirecting to profile...</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    )
-  }
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-2 text-sm text-muted-foreground">Loading profile...</p>
-        </div>
-      </div>
-    )
-  }
 
-  if (!isAuthenticated || !user) {
+  if (!user) {
     return null
   }
 
@@ -354,10 +309,13 @@ export default function EditProfilePage(): React.JSX.Element | null {
                             type="date"
                             value={(formData as any).birth_date || ""}
                             onChange={(e) => updateField("birth_date", e.target.value)}
+                            min={new Date(new Date().getFullYear() - 80, 0, 1).toISOString().split('T')[0]}
+                            max={new Date(new Date().getFullYear() - 10, 11, 31).toISOString().split('T')[0]}
                             className="pl-10 h-12 border-2 border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm transition-all duration-200"
                             disabled={isSubmitting || loading}
                           />
                         </div>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">Age must be between 10 and 80 years</p>
                         {(errors as any).birth_date && (
                           <p className="text-sm text-red-600 dark:text-red-400">{(errors as any).birth_date}</p>
                         )}

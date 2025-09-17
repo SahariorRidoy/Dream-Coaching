@@ -1,7 +1,6 @@
 "use client"
 
-import React, { useEffect } from "react"
-import { useRouter } from "next/navigation"
+import React from "react"
 import { useAuth } from "@/contexts/AuthContext"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -11,27 +10,9 @@ import { User, Mail, Phone, Calendar, Edit, Settings, LogOut, Heart, Shield, Arr
 import Link from "next/link"
 
 export default function ProfilePage(): React.JSX.Element | null {
-  const { user, isAuthenticated, logout, loading } = useAuth()
-  const router = useRouter()
+  const { user, logout } = useAuth()
 
-  useEffect(() => {
-    if (!loading && !isAuthenticated) {
-      router.push("/login")
-    }
-  }, [isAuthenticated, loading, router])
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-2 text-sm text-muted-foreground">Loading profile...</p>
-        </div>
-      </div>
-    )
-  }
-
-  if (!isAuthenticated || !user) {
+  if (!user) {
     return null
   }
 
@@ -70,7 +51,6 @@ export default function ProfilePage(): React.JSX.Element | null {
 
   const handleLogout = (): void => {
     logout()
-    router.push("/login")
   }
 
   return (

@@ -4,7 +4,7 @@
 import * as React from "react"
 
 const TOAST_LIMIT = 1
-const TOAST_REMOVE_DELAY = 1000000
+const TOAST_REMOVE_DELAY = 50000
 
 type ToastActionType = "ADD_TOAST" | "UPDATE_TOAST" | "DISMISS_TOAST" | "REMOVE_TOAST"
 
@@ -15,6 +15,7 @@ interface Toast {
   action?: React.ReactNode
   open?: boolean
   onOpenChange?: (open: boolean) => void
+  variant?: "default" | "destructive"
 }
 
 interface ToastState {

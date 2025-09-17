@@ -11,6 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Eye, EyeOff, Phone, Lock, UserPlus, Shield, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
+import { useToast } from '@/hooks/use-toast';
 
 interface RegisterData {
   phone_number: string
@@ -23,6 +24,7 @@ export default function RegisterPage(): React.JSX.Element {
   // const router = useRouter();
   const { register, error, loading } = useAuth();
   const { formData, errors, isSubmitting, updateField, handleSubmit } = useAuthForm();
+  const { toast } = useToast();
 
   const onSubmit = async (data: RegisterData): Promise<void> => {
     try {
@@ -46,10 +48,19 @@ export default function RegisterPage(): React.JSX.Element {
       const verifyUrl = `/verify-otp?phone_number=${encodeURIComponent(data.phone_number)}`;
       // Redirecting to OTP verification
       
+      toast({
+        title: "Account Created!",
+        description: "Please check your phone for the OTP verification code.",
+      });
+      
       // Use window.location for guaranteed redirect
       window.location.href = verifyUrl;
     } catch (error) {
-      console.error('Registration failed:', error);
+      toast({
+        title: "Registration Failed",
+        description: "Please check your information and try again.",
+        variant: "destructive"
+      });
       throw error;
     }
   };

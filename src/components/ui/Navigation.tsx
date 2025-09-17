@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
+
 import { useAuth } from "@/contexts/AuthContext"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -19,11 +19,10 @@ import Link from "next/link"
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const { user, logout } = useAuth()
-  const router = useRouter()
+
 
   const handleLogout = () => {
     logout()
-    router.push("/login")
   }
 
   const getInitials = () => {

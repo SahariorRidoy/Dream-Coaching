@@ -43,10 +43,8 @@ interface DashboardStats {
 export default function DashboardPage(): React.JSX.Element {
   const { user } = useAuth()
   
-  // Mock data - replace with actual API calls
-  const isAdmin = (user as any)?.role === 'admin' || 
-                  (user as any)?.user_type === 'admin' || 
-                  user?.phone_number === '01700000000' // Default admin phone
+  // Check if user is admin based on user_type from profile
+  const isAdmin = user?.user_type === 'admin'
   
   const stats: DashboardStats = isAdmin ? {
     totalStudents: 156,

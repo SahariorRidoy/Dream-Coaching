@@ -157,11 +157,28 @@
     transform: translateY(20px);
   }
   
+  .animate-fade-in-delay-1 {
+    animation: fadeInUp 0.6s ease-out 0.1s forwards;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  
+  .animate-fade-in-delay-2 {
+    animation: fadeInUp 0.6s ease-out 0.2s forwards;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  
   @keyframes fadeInUp {
     to {
       opacity: 1;
       transform: translateY(0);
     }
+  }
+  
+  /* Smooth loading skeleton */
+  .skeleton {
+    @apply animate-pulse bg-muted rounded;
   }
   
   /* Mobile-first container padding */
@@ -174,8 +191,43 @@
     @apply gap-4 sm:gap-6 lg:gap-8;
   }
   
+  /* Responsive padding for cards */
+  .card-padding {
+    @apply p-4 sm:p-6;
+  }
+  
   /* Touch-friendly button sizing */
   .btn-touch {
-    @apply min-h-[44px] min-w-[44px];
+    @apply min-h-[44px] min-w-[44px] text-sm sm:text-base;
+  }
+  
+  /* Professional card hover effects */
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+  
+  /* Responsive modal sizing */
+  .modal-responsive {
+    @apply w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl;
+  }
+  
+  /* Better focus states for accessibility */
+  .focus-enhanced {
+    @apply focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:outline-none;
+  }
+  
+  /* Responsive text truncation */
+  .text-truncate-responsive {
+    @apply truncate sm:whitespace-normal;
+  }
+  
+  /* Mobile-first flex layouts */
+  .flex-mobile-stack {
+    @apply flex flex-col sm:flex-row;
+  }
+  
+  /* Responsive spacing */
+  .space-responsive {
+    @apply space-y-4 sm:space-y-0 sm:space-x-4;
   }
 }

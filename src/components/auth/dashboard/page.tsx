@@ -251,7 +251,7 @@ export default function DashboardPage(): React.JSX.Element {
                           </Link>
                         </Button>
                         <Button className="h-auto p-4 justify-start bg-gradient-to-r from-secondary to-secondary/90 hover:from-secondary/90 hover:to-secondary/80" asChild>
-                          <Link href="/admin/courses" className="flex items-center gap-3">
+                          <Link href="/dashboard/courses" className="flex items-center gap-3">
                             <BookOpen className="h-5 w-5" />
                             <div className="text-left">
                               <div className="font-medium">Manage Courses</div>

@@ -31,6 +31,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'sslcommerz.com',
       },
+      {
+        protocol: 'http',
+        hostname: 'dc-main.up.railway.app',
+      },
     ],
   },
   typescript: {

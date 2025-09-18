@@ -50,6 +50,12 @@ export default function NotFound() {
                 Back to Home
               </Button>
             </Link>
+            <Link href="/dashboard">
+              <Button className="w-full sm:w-auto bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-primary-foreground px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105">
+                <Home className="w-4 h-4 mr-2" />
+                Back to Dashboard
+              </Button>
+            </Link>
             
             <Link href="/courses">
               <Button variant="outline" className="w-full sm:w-auto border-primary/30 text-primary hover:bg-primary/10 px-6 py-3 rounded-xl transition-all duration-200 hover:scale-105">

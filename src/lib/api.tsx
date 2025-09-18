@@ -245,4 +245,108 @@ export const instructorApi = {
     }),
 }
 
+// Course API functions
+export const courseApi = {
+  getCourses: () =>
+    apiRequest("/api/courses/", {
+      method: "GET",
+    }),
+
+  getSingleCourse: (id: string) =>
+    apiRequest(`/api/courses/${id}/`, {
+      method: "GET",
+    }),
+
+  createCourse: async (courseData: {
+    name: string
+    short_description: string
+    description: string
+    duration: string
+    instructor_list: string[]
+    image?: File | null
+    is_completed?: boolean
+  }) => {
+    // Create course with JSON first
+    const payload = {
+      name: courseData.name,
+      short_description: courseData.short_description,
+      description: courseData.description,
+      duration: parseInt(courseData.duration) || 0,
+      instructor_list: courseData.instructor_list,
+      is_completed: courseData.is_completed || false
+    }
+    
+    const course = await apiRequest("/api/courses/", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    })
+    
+    // If image exists, upload it separately
+    if (courseData.image && course.id) {
+      const formData = new FormData()
+      formData.append('image', courseData.image)
+      
+      await apiRequest(`/api/courses/${course.id}/`, {
+        method: "PATCH",
+        body: formData,
+      })
+    }
+    
+    return course
+  },
+
+  updateCourse: async (id: string, courseData: {
+    name?: string
+    short_description?: string
+    description?: string
+    duration?: string
+    instructor_list?: string[]
+    image?: File | null
+    is_completed?: boolean
+  }) => {
+    if (courseData.image) {
+      // Update with image using FormData
+      const formData = new FormData()
+      
+      // Add JSON data fields if provided
+      if (courseData.name) formData.append('name', courseData.name)
+      if (courseData.short_description) formData.append('short_description', courseData.short_description)
+      if (courseData.description) formData.append('description', courseData.description)
+      if (courseData.duration) formData.append('duration', courseData.duration)
+      if (courseData.is_completed !== undefined) formData.append('is_completed', courseData.is_completed.toString())
+      if (courseData.instructor_list) {
+        courseData.instructor_list.forEach((instructor, index) => {
+          formData.append(`instructor_list[${index}]`, instructor)
+        })
+      }
+      
+      formData.append('image', courseData.image)
+      
+      return apiRequest(`/api/courses/${id}/`, {
+        method: "PATCH",
+        body: formData,
+      })
+    } else {
+      // Update without image using JSON
+      const payload: any = {}
+      if (courseData.name) payload.name = courseData.name
+      if (courseData.short_description) payload.short_description = courseData.short_description
+      if (courseData.description) payload.description = courseData.description
+      if (courseData.duration) payload.duration = parseInt(courseData.duration)
+      if (courseData.instructor_list) payload.instructor_list = courseData.instructor_list
+      if (courseData.is_completed !== undefined) payload.is_completed = courseData.is_completed
+      
+      return apiRequest(`/api/courses/${id}/`, {
+        method: "PATCH",
+        body: JSON.stringify(payload),
+      })
+    }
+  },
+
+  deleteCourse: (id: string) =>
+    apiRequest(`/api/courses/${id}/`, {
+      method: "DELETE",
+    }),
+}
+
 export { ApiError }
